@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace OculusUploaderGUI_WPF
+namespace GameUploader
 {
     public class OculusUploaderGUISettings : INotifyPropertyChanged
     {
@@ -218,7 +218,7 @@ namespace OculusUploaderGUI_WPF
         {
             using (StreamWriter sw = File.CreateText(filename))
             {
-                XmlSerializer xmls = new XmlSerializ1er(typeof(OculusUploaderGUISettings));
+                XmlSerializer xmls = new XmlSerializer(typeof(OculusUploaderGUISettings));
                 xmls.Serialize(sw, this);
             }
         }

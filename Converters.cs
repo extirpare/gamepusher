@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace OculusUploaderGUI_WPF.Converters
+namespace GameUploader.Converters
 {
     public class BoolToBackgroundColorConverter : IValueConverter
     {

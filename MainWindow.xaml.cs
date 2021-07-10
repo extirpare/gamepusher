@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using Path = System.IO.Path;
 
-namespace OculusUploaderGUI_WPF
+namespace GameUploader
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace OculusUploaderGUI_WPF
+namespace GameUploader
 {
     /// <summary>
     /// Interaction logic for App.xaml

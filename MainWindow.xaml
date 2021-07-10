@@ -1,16 +1,16 @@
 ﻿<Window
-    x:Class="OculusUploaderGUI_WPF.MainWindow"
+    x:Class="GameUploader.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:OculusUploaderGUI_WPF"
+    xmlns:local="using:GameUploader"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:converters="clr-namespace:OculusUploaderGUI_WPF.Converters"
+    xmlns:converters="clr-namespace:GameUploader.Converters"
     Closing="Window_Closing"
     mc:Ignorable="d"
-    Width="320" 
-    Height="530"
-    Title="Oculus Uploader">
+    Width="520" 
+    Height="430"
+    Title="Game Uploader">
 
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="HeaderText">
@@ -71,6 +71,22 @@
     </Window.Resources>
 
     <DockPanel Background="#1C1E20">
+		<Border x:Name="ServiceSelectorBorder" DockPanel.Dock="Left" Width="120" BorderBrush="#6E5300" BorderThickness="2" Background="#1C6E5300">
+			<StackPanel x:Name="ServiceSelectorRoot" Orientation="Vertical" Margin="5,15">
+				<Button Style="{StaticResource DarkButton}" Click="PathToOculusExe_BrowseButton_Click" Margin="0,0,0,5">
+					<StackPanel Orientation="Horizontal" Margin="2">
+						<Image Source="Images/oculus-logo.png" Width="20" Height="20" Margin="0,0,5,0"></Image>
+						<TextBlock VerticalAlignment="Center">Oculus</TextBlock>
+					</StackPanel>
+				</Button>
+				<Button Style="{StaticResource DarkButton}" Click="PathToOculusExe_BrowseButton_Click" Margin="0,0,0,5">
+					<StackPanel Orientation="Horizontal" Margin="2">
+						<Image Source="Images/steam-logo.png" Width="20" Height="20" Margin="0,0,5,0"></Image>
+						<TextBlock VerticalAlignment="Center">Steam</TextBlock>
+					</StackPanel>
+				</Button>
+			</StackPanel>
+		</Border>
         <Border x:Name="FinalSectionBorder" DockPanel.Dock="Bottom" BorderBrush="{Binding IsValid, Converter={StaticResource BoolToFGColorConverter}, UpdateSourceTrigger=PropertyChanged}" Background="{Binding IsValid, Converter={StaticResource BoolToBGColorConverter}}" BorderThickness="2,2,2,2" Height="93.6" Margin="0">
             <StackPanel x:Name="FinalSectionRoot" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                 <TextBlock Text="{Binding ErrorStr}" Visibility="{Binding IsInvalid, Converter={StaticResource BoolToVisConverter}}" FontSize="12" Foreground="White" Margin="3" HorizontalAlignment="Center" FontWeight="Bold" />
@@ -81,7 +97,7 @@
             <StackPanel x:Name="ContentRoot" Orientation="Vertical" Margin="15">
                 <Border x:Name="TitlePanel" Background="#7F024ABE" CornerRadius="8" Padding="16,4,16,4" Margin="0,0,0,10">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Style="{StaticResource HeaderText}" Text="Oculus Uploader GUI v1.0" FontWeight="Bold" FontSize="16" Margin="0,0,0,-3" />
+                        <TextBlock Style="{StaticResource HeaderText}" Text="Oculus" FontWeight="Bold" FontSize="16" Margin="0,0,0,-3" />
                         <TextBlock><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://developer.oculus.com/distribute/publish-reference-platform-command-line-utility/" Foreground="#FF91E5BF"><Run Text="Documentation"/></Hyperlink></TextBlock>
                     </StackPanel>
                 </Border>
@@ -107,14 +123,14 @@
                     <StackPanel x:Name="PlatformPanel" Orientation="Vertical">
                         <TextBlock Style="{StaticResource HeaderText}" Text="Platform"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <RadioButton x:Name="PlatformPicker_Quest" Content="Quest" IsChecked="{Binding PlatformIsQuest}" Margin="0,0,5,0"/>
+                            <RadioButton x:Name="PlatformPicker_Quest" Content="Quest" IsChecked="{Binding PlatformIsQuest}" Margin="0,0,10,0"/>
                             <RadioButton x:Name="PlatformPicker_Rift" Content="Rift" IsChecked="{Binding PlatformIsRift}"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel x:Name="CredentialsTypePanel" Orientation="Vertical" Margin="0,10,0,0">
                         <TextBlock Style="{StaticResource HeaderText}" Text="Credentials"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <RadioButton x:Name="CredentialsPicker_UserToken" Content="User Token" IsChecked="{Binding CredentialsSourceIsUserToken}" Margin="0,0,5,0"/>
+                            <RadioButton x:Name="CredentialsPicker_UserToken" Content="User Token" IsChecked="{Binding CredentialsSourceIsUserToken}" Margin="0,0,10,0"/>
                             <RadioButton x:Name="CredentialsPicker_AppSecret" Content="App Secret" IsChecked="{Binding CredentialsSourceIsAppSecret}"/>
                         </StackPanel>
                     </StackPanel>
