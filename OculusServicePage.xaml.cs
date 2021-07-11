@@ -16,15 +16,24 @@ using System.Windows.Shapes;
 
 namespace GameUploader
 {
-	public partial class OculusServicePage : Page
+	public partial class OculusServicePage : Page, IServicePage
 	{
         OculusUploaderGUISettings m_settings;
 
 		public OculusServicePage()
 		{
 			InitializeComponent();
+        }
+
+        public void OnEntered()
+        {
             m_settings = OculusUploaderGUISettings.Load(OculusUploaderGUISettings.DefaultPath);
             DataContext = m_settings;
+        }
+
+        public void OnExited()
+        {
+            m_settings.Save(OculusUploaderGUISettings.DefaultPath);
         }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
@@ -89,7 +98,7 @@ namespace GameUploader
             switch (m_settings.CredentialsSource)
             {
                 case OculusUploaderGUISettings.eCredentialsSource.AppSecret: cmdStr.Append(" --app_secret " + m_settings.AppSecret); break;
-                case OculusUploaderGUISettings.eCredentialsSource.UserToken: cmdStr.Append(" --token " + m_settings.AppSecret); break;
+                case OculusUploaderGUISettings.eCredentialsSource.UserToken: cmdStr.Append(" --token " + m_settings.UserToken); break;
                 default: throw new Exception();
             }
             cmdStr.Append(" --apk \"" + m_settings.PathToAPK + '"');
@@ -124,5 +133,5 @@ namespace GameUploader
             //okay, we don't even check the version number, we just check that the output is valid-ish
             return versionStr.Contains("Oculus Platform Command Line Utility");
         }
-    }
+	}
 }

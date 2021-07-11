@@ -13,7 +13,7 @@
 	<Window.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="Resources/Shared.xaml"/>
+				<ResourceDictionary Source="pack://application:,,,/Resources/Shared.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Window.Resources>
@@ -35,14 +35,6 @@
 				</Button>
 			</StackPanel>
 		</Border>
-        <Border x:Name="FinalSectionBorder" DockPanel.Dock="Bottom" BorderBrush="{Binding IsValid, Converter={StaticResource BoolToFGColorConverter}, UpdateSourceTrigger=PropertyChanged}" Background="{Binding IsValid, Converter={StaticResource BoolToBGColorConverter}}" BorderThickness="2,2,2,2" Height="93.6" Margin="0">
-            <StackPanel x:Name="FinalSectionRoot" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                <TextBlock Text="{Binding ErrorStr}" Visibility="{Binding IsInvalid, Converter={StaticResource BoolToVisConverter}}" FontSize="12" Foreground="White" Margin="3" HorizontalAlignment="Center" FontWeight="Bold" />
-                <Button x:Name="UploadButton" Style="{StaticResource DarkButton}" IsEnabled="{Binding IsValid}" Opacity="{Binding IsValid, Converter={StaticResource BoolToOpacityConverter}}" Padding="6" Content="Upload Build" HorizontalAlignment="Center" Click="UploadBuildButton_Click"/>
-            </StackPanel>
-        </Border>
-        <ScrollViewer x:Name="ContentRootScroll" DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
-			<Frame x:Name="ServiceFrame" Template="{StaticResource CleanFrame}"/>
-        </ScrollViewer>
+		<Frame x:Name="ServiceFrame" DockPanel.Dock="Top" Template="{StaticResource CleanFrame}"/>
     </DockPanel>
 </Window>

@@ -15,32 +15,40 @@ namespace GameUploader
     /// </summary>
     public partial class MainWindow : Window
     {
-        OculusUploaderGUISettings m_settings;
+        IServicePage m_currPage;
 
         public MainWindow()
         {
             InitializeComponent();
+            SetServicePage(new OculusServicePage());
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            m_settings.Save(OculusUploaderGUISettings.DefaultPath);
+            SetServicePage(null);
         }
 
 
         private void SelectServiceButton_Oculus_Click(object sender, RoutedEventArgs e)
         {
-            ServiceFrame.Navigate(new OculusServicePage());
+            SetServicePage(new OculusServicePage());
         }
 
 
         private void SelectServiceButton_Steam_Click(object sender, RoutedEventArgs e)
         {
-            ServiceFrame.Navigate(new SteamServicePage());
+            SetServicePage(new SteamServicePage());
         }
 
-        private void UploadBuildButton_Click(object sender, RoutedEventArgs e)
-        {
+        void SetServicePage(IServicePage newPage)
+		{
+            if (newPage == m_currPage) return;
+            if (newPage != null && m_currPage != null && newPage.GetType() == m_currPage.GetType()) return;
+            if (m_currPage != null) m_currPage.OnExited();
+
+            m_currPage = newPage;
+            ServiceFrame.Navigate(m_currPage);
+            m_currPage.OnEntered();
         }
     }
 }

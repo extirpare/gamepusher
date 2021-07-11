@@ -28,34 +28,8 @@
 	</Style>
 	
 	<ControlTemplate TargetType="Frame" x:Key="CleanFrame">
-		<DockPanel Margin="7">
-			<StackPanel 
-            Margin="7"
-            Orientation="Horizontal"
-            DockPanel.Dock="Top"
-            >
-				<Button 
-                Content="Avast! Go back!" 
-                Command="{x:Static NavigationCommands.BrowseBack}" 
-                IsEnabled="{TemplateBinding CanGoBack}" 
-                />
-				<Button 
-                Content="Forward you dogs!" 
-                Command="{x:Static NavigationCommands.BrowseForward}" 
-                IsEnabled="{TemplateBinding CanGoForward}" 
-                />
-			</StackPanel>
-
-			<Border 
-            BorderBrush="Green"
-            Margin="7"
-            BorderThickness="7"
-            Padding="7"
-            CornerRadius="7"
-            Background="White"
-            >
-				<ContentPresenter />
-			</Border>
+		<DockPanel Margin="2">
+			<ContentPresenter />
 		</DockPanel>
 	</ControlTemplate>
 

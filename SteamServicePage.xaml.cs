@@ -15,14 +15,19 @@ using System.Windows.Shapes;
 
 namespace GameUploader
 {
-	/// <summary>
-	/// Interaction logic for Page1.xaml
-	/// </summary>
-	public partial class SteamServicePage : Page
+	public partial class SteamServicePage : Page, IServicePage
 	{
 		public SteamServicePage()
 		{
 			InitializeComponent();
+		}
+
+		public void OnEntered()
+		{
+		}
+
+		public void OnExited()
+		{
 		}
 	}
 }

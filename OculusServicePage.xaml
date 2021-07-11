@@ -5,138 +5,148 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GameUploader"
       mc:Ignorable="d" 
-      d:DesignHeight="850" d:DesignWidth="500"
+      d:DesignHeight="450" d:DesignWidth="500"
       Title="Oculus">
 
 	<Page.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="Resources/Shared.xaml"/>
+				<ResourceDictionary Source="pack://application:,,,/Resources/Shared.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Page.Resources>
-	
-	<StackPanel x:Name="ContentRoot" Orientation="Vertical" Margin="15">
-		<Border x:Name="TitlePanel" Background="#7F024ABE" CornerRadius="8" Padding="16,4,16,4" Margin="0,0,0,10">
-			<StackPanel Orientation="Vertical">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Oculus" FontWeight="Bold" FontSize="16" Margin="0,0,0,-3" />
-				<TextBlock><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://developer.oculus.com/distribute/publish-reference-platform-command-line-utility/" Foreground="#FF91E5BF"><Run Text="Documentation"/></Hyperlink></TextBlock>
+
+	<DockPanel x:Name="ContentRoot" Background="#1C1E20">
+		<Border x:Name="FinalSectionBorder" DockPanel.Dock="Bottom" BorderBrush="{Binding IsValid, Converter={StaticResource BoolToFGColorConverter}, UpdateSourceTrigger=PropertyChanged}" Background="{Binding IsValid, Converter={StaticResource BoolToBGColorConverter}}" BorderThickness="2,2,2,2" Height="93.6" Margin="0">
+			<StackPanel x:Name="FinalSectionRoot" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+				<TextBlock Text="{Binding ErrorStr}" Visibility="{Binding IsInvalid, Converter={StaticResource BoolToVisConverter}}" FontSize="12" Foreground="White" Margin="3" HorizontalAlignment="Center" FontWeight="Bold" />
+				<Button x:Name="UploadButton" Style="{StaticResource DarkButton}" IsEnabled="{Binding IsValid}" Opacity="{Binding IsValid, Converter={StaticResource BoolToOpacityConverter}}" Padding="6" Content="Upload Build" HorizontalAlignment="Center" Click="UploadBuildButton_Click"/>
 			</StackPanel>
 		</Border>
-		<StackPanel x:Name="MetaSettingsPanel" Orientation="Vertical">
-			<StackPanel x:Name="PathToOculusExePanel" Orientation="Vertical">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Path to ovr-platform-util.exe"/>
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="10"/>
-						<ColumnDefinition Width="80"/>
-					</Grid.ColumnDefinitions>
-					<TextBox Style="{StaticResource DarkTextBox}" x:Name="PathToOculusExe_TextBox" Grid.Column="0" Text="{Binding PathToOculusExe}"/>
-					<Button Style="{StaticResource DarkButton}" Content="Browse..." Grid.Column="2" Click="PathToOculusExe_BrowseButton_Click"/>
-				</Grid>
-			</StackPanel>
-		</StackPanel>
-		<StackPanel x:Name="AppSettingsPanel" Orientation="Vertical" Margin="0,20,0,0">
-			<StackPanel x:Name="AppIDPanel" Orientation="Vertical">
-				<TextBlock Style="{StaticResource HeaderText}" Text="App ID"/>
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AppID}"/>
-			</StackPanel>
-			<StackPanel x:Name="PlatformPanel" Orientation="Vertical">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Platform"/>
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-					<RadioButton x:Name="PlatformPicker_Quest" Content="Quest" IsChecked="{Binding PlatformIsQuest}" Margin="0,0,10,0"/>
-					<RadioButton x:Name="PlatformPicker_Rift" Content="Rift" IsChecked="{Binding PlatformIsRift}"/>
+		<ScrollViewer x:Name="ContentRootScroll" DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+			<StackPanel Orientation="Vertical" Margin="10,20">
+				<Border x:Name="TitlePanel" Background="#7F024ABE" CornerRadius="8" Padding="16,4,16,4" Margin="0,0,0,10">
+					<StackPanel Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Oculus" FontWeight="Bold" FontSize="16" Margin="0,0,0,-3" />
+						<TextBlock><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://developer.oculus.com/distribute/publish-reference-platform-command-line-utility/" Foreground="#FF91E5BF"><Run Text="Documentation"/></Hyperlink></TextBlock>
+					</StackPanel>
+				</Border>
+				<StackPanel x:Name="MetaSettingsPanel" Orientation="Vertical">
+					<StackPanel x:Name="PathToOculusExePanel" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Path to ovr-platform-util.exe"/>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="10"/>
+								<ColumnDefinition Width="80"/>
+							</Grid.ColumnDefinitions>
+							<TextBox Style="{StaticResource DarkTextBox}" x:Name="PathToOculusExe_TextBox" Grid.Column="0" Text="{Binding PathToOculusExe}"/>
+							<Button Style="{StaticResource DarkButton}" Content="Browse..." Grid.Column="2" Click="PathToOculusExe_BrowseButton_Click"/>
+						</Grid>
+					</StackPanel>
 				</StackPanel>
-			</StackPanel>
-			<StackPanel x:Name="CredentialsTypePanel" Orientation="Vertical" Margin="0,10,0,0">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Credentials"/>
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-					<RadioButton x:Name="CredentialsPicker_UserToken" Content="User Token" IsChecked="{Binding CredentialsSourceIsUserToken}" Margin="0,0,10,0"/>
-					<RadioButton x:Name="CredentialsPicker_AppSecret" Content="App Secret" IsChecked="{Binding CredentialsSourceIsAppSecret}"/>
+				<StackPanel x:Name="AppSettingsPanel" Orientation="Vertical" Margin="0,20,0,0">
+					<StackPanel x:Name="AppIDPanel" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="App ID"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AppID}"/>
+					</StackPanel>
+					<StackPanel x:Name="PlatformPanel" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Platform"/>
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+							<RadioButton x:Name="PlatformPicker_Quest" Content="Quest" IsChecked="{Binding PlatformIsQuest}" Margin="0,0,10,0"/>
+							<RadioButton x:Name="PlatformPicker_Rift" Content="Rift" IsChecked="{Binding PlatformIsRift}"/>
+						</StackPanel>
+					</StackPanel>
+					<StackPanel x:Name="CredentialsTypePanel" Orientation="Vertical" Margin="0,10,0,0">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Credentials"/>
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+							<RadioButton x:Name="CredentialsPicker_UserToken" Content="User Token" IsChecked="{Binding CredentialsSourceIsUserToken}" Margin="0,0,10,0"/>
+							<RadioButton x:Name="CredentialsPicker_AppSecret" Content="App Secret" IsChecked="{Binding CredentialsSourceIsAppSecret}"/>
+						</StackPanel>
+					</StackPanel>
+					<StackPanel x:Name="CredentialsPanel_UserToken" Orientation="Vertical" Visibility="{Binding CredentialsSourceIsUserToken, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource HeaderText}" Text="User Token" />
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding UserToken}"/>
+					</StackPanel>
+					<StackPanel x:Name="CredentialsPanel_AppSecret" Orientation="Vertical" Visibility="{Binding CredentialsSourceIsAppSecret, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource HeaderText}" Text="App Secret" />
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AppSecret}"/>
+					</StackPanel>
 				</StackPanel>
-			</StackPanel>
-			<StackPanel x:Name="CredentialsPanel_UserToken" Orientation="Vertical" Visibility="{Binding CredentialsSourceIsUserToken, Converter={StaticResource BoolToVisConverter}}">
-				<TextBlock Style="{StaticResource HeaderText}" Text="User Token" />
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding UserToken}"/>
-			</StackPanel>
-			<StackPanel x:Name="CredentialsPanel_AppSecret" Orientation="Vertical" Visibility="{Binding CredentialsSourceIsAppSecret, Converter={StaticResource BoolToVisConverter}}">
-				<TextBlock Style="{StaticResource HeaderText}" Text="App Secret" />
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AppSecret}"/>
-			</StackPanel>
-		</StackPanel>
 
-		<StackPanel x:Name="BuildSettingsPanel" Orientation="Vertical" Margin="0,20,0,0">
-			<StackPanel x:Name="PathToAPKPanel" Orientation="Vertical">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Path to APK" ToolTip="Tooltip about path to APK goes here"/>
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="10"/>
-						<ColumnDefinition Width="80"/>
-					</Grid.ColumnDefinitions>
-					<TextBox Style="{StaticResource DarkTextBox}" Grid.Column="0" x:Name="PathToAPK_TextBox" Text="{Binding PathToAPK}"/>
-					<Button Style="{StaticResource DarkButton}" Content="Browse..." Grid.Column="2" Click="PathToAPK_BrowseButton_Click"/>
-				</Grid>
+				<StackPanel x:Name="BuildSettingsPanel" Orientation="Vertical" Margin="0,20,0,0">
+					<StackPanel x:Name="PathToAPKPanel" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Path to APK" ToolTip="Tooltip about path to APK goes here"/>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="10"/>
+								<ColumnDefinition Width="80"/>
+							</Grid.ColumnDefinitions>
+							<TextBox Style="{StaticResource DarkTextBox}" Grid.Column="0" x:Name="PathToAPK_TextBox" Text="{Binding PathToAPK}"/>
+							<Button Style="{StaticResource DarkButton}" Content="Browse..." Grid.Column="2" Click="PathToAPK_BrowseButton_Click"/>
+						</Grid>
+					</StackPanel>
+					<StackPanel x:Name="ReleaseChannelPanel" Orientation="Vertical" Margin="0,10,0,0">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Release Channel"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding ReleaseChannel}"/>
+					</StackPanel>
+					<StackPanel x:Name="OptionalSettingsPanel" Orientation="Vertical" Margin="0,10,0,0">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Optional Settings"/>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="40"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="40"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="20"/>
+							</Grid.RowDefinitions>
+							<Button Grid.Column="1" Grid.Row="0" Style="{StaticResource DarkButton}" Content="{Binding OptionalSettingsCountStr}" Click="OptionalSettingsDropdownButton_Click">
+								<Button.ContextMenu>
+									<ContextMenu>
+										<MenuItem IsChecked="{Binding WantsAssetsDir}" Header="Assets Dir?" Click="ToggleWantsAssetsDir_Click"/>
+										<MenuItem IsChecked="{Binding WantsAssetFilesConfig}" Header="Asset Files Config?" Click="ToggleWantsAssetFilesConfig_Click"/>
+										<MenuItem IsChecked="{Binding WantsOBB}" Header="OBB (Expansion File)?" Click="ToggleWantsOBB_Click"/>
+										<MenuItem IsChecked="{Binding WantsReleaseNotes}" Header="Release Notes?" Click="ToggleWantsReleaseNotes_Click"/>
+										<MenuItem IsChecked="{Binding WantsLanguagePacks}" Header="Language Packs?" Click="ToggleWantsLanguagePacks_Click"/>
+										<MenuItem IsChecked="{Binding WantsDebugSymbols}" Header="Debug Symbols Dir?" Click="ToggleWantsDebugSymbols_Click"/>
+										<MenuItem IsChecked="{Binding WantsDebugSymbolsPattern}" IsEnabled="{Binding WantsDebugSymbols}" Header="Debug Symbols Pattern?" Click="ToggleWantsDebugSymbolsPattern_Click"/>
+									</ContextMenu>
+								</Button.ContextMenu>
+							</Button>
+						</Grid>
+					</StackPanel>
+					<StackPanel x:Name="AssetsDirPanel" Orientation="Vertical" Visibility="{Binding WantsAssetsDir, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Path to Assets Directory"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AssetsDir}"/>
+					</StackPanel>
+					<StackPanel x:Name="AssetFilesConfigPanel" Orientation="Vertical" Visibility="{Binding WantsAssetFilesConfig, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Path to Asset Files Config"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AssetFilesConfig}"/>
+					</StackPanel>
+					<StackPanel x:Name="OBBPanel" Orientation="Vertical" Visibility="{Binding WantsOBB, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Path to OBB"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding PathToOBB}"/>
+					</StackPanel>
+					<StackPanel x:Name="ReleaseNotesPanel" Orientation="Vertical" Visibility="{Binding WantsReleaseNotes, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Release Notes"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding ReleaseNotes}"/>
+					</StackPanel>
+					<StackPanel x:Name="LanguagePacksPanel" Orientation="Vertical" Visibility="{Binding WantsLanguagePacks, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Path to Language Packs Directory"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding LanguagePacksDir}"/>
+					</StackPanel>
+					<StackPanel x:Name="DebugSymbolsPanel" Orientation="Vertical" Visibility="{Binding WantsDebugSymbols, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Path to Debug Symbols Directory"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding DebugSymbolsDir}"/>
+					</StackPanel>
+					<StackPanel x:Name="DebugSymbolsPatternPanel" Orientation="Vertical" Visibility="{Binding WantsDebugSymbolsPattern, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Debug Symbols Pattern"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding DebugSymbolsPattern}"/>
+					</StackPanel>
+				</StackPanel>
 			</StackPanel>
-			<StackPanel x:Name="ReleaseChannelPanel" Orientation="Vertical" Margin="0,10,0,0">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Release Channel"/>
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding ReleaseChannel}"/>
-			</StackPanel>
-			<StackPanel x:Name="OptionalSettingsPanel" Orientation="Vertical" Margin="0,10,0,0">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Optional Settings"/>
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="40"/>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="40"/>
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="20"/>
-					</Grid.RowDefinitions>
-					<Button Grid.Column="1" Grid.Row="0" Style="{StaticResource DarkButton}" Content="{Binding OptionalSettingsCountStr}" Click="OptionalSettingsDropdownButton_Click">
-						<Button.ContextMenu>
-							<ContextMenu>
-								<MenuItem IsChecked="{Binding WantsAssetsDir}" Header="Assets Dir?" Click="ToggleWantsAssetsDir_Click"/>
-								<MenuItem IsChecked="{Binding WantsAssetFilesConfig}" Header="Asset Files Config?" Click="ToggleWantsAssetFilesConfig_Click"/>
-								<MenuItem IsChecked="{Binding WantsOBB}" Header="OBB (Expansion File)?" Click="ToggleWantsOBB_Click"/>
-								<MenuItem IsChecked="{Binding WantsReleaseNotes}" Header="Release Notes?" Click="ToggleWantsReleaseNotes_Click"/>
-								<MenuItem IsChecked="{Binding WantsLanguagePacks}" Header="Language Packs?" Click="ToggleWantsLanguagePacks_Click"/>
-								<MenuItem IsChecked="{Binding WantsDebugSymbols}" Header="Debug Symbols Dir?" Click="ToggleWantsDebugSymbols_Click"/>
-								<MenuItem IsChecked="{Binding WantsDebugSymbolsPattern}" IsEnabled="{Binding WantsDebugSymbols}" Header="Debug Symbols Pattern?" Click="ToggleWantsDebugSymbolsPattern_Click"/>
-							</ContextMenu>
-						</Button.ContextMenu>
-					</Button>
-				</Grid>
-			</StackPanel>
-			<StackPanel x:Name="AssetsDirPanel" Orientation="Vertical" Visibility="{Binding WantsAssetsDir, Converter={StaticResource BoolToVisConverter}}">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Path to Assets Directory"/>
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AssetsDir}"/>
-			</StackPanel>
-			<StackPanel x:Name="AssetFilesConfigPanel" Orientation="Vertical" Visibility="{Binding WantsAssetFilesConfig, Converter={StaticResource BoolToVisConverter}}">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Path to Asset Files Config"/>
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AssetFilesConfig}"/>
-			</StackPanel>
-			<StackPanel x:Name="OBBPanel" Orientation="Vertical" Visibility="{Binding WantsOBB, Converter={StaticResource BoolToVisConverter}}">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Path to OBB"/>
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding PathToOBB}"/>
-			</StackPanel>
-			<StackPanel x:Name="ReleaseNotesPanel" Orientation="Vertical" Visibility="{Binding WantsReleaseNotes, Converter={StaticResource BoolToVisConverter}}">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Release Notes"/>
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding ReleaseNotes}"/>
-			</StackPanel>
-			<StackPanel x:Name="LanguagePacksPanel" Orientation="Vertical" Visibility="{Binding WantsLanguagePacks, Converter={StaticResource BoolToVisConverter}}">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Path to Language Packs Directory"/>
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding LanguagePacksDir}"/>
-			</StackPanel>
-			<StackPanel x:Name="DebugSymbolsPanel" Orientation="Vertical" Visibility="{Binding WantsDebugSymbols, Converter={StaticResource BoolToVisConverter}}">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Path to Debug Symbols Directory"/>
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding DebugSymbolsDir}"/>
-			</StackPanel>
-			<StackPanel x:Name="DebugSymbolsPatternPanel" Orientation="Vertical" Visibility="{Binding WantsDebugSymbolsPattern, Converter={StaticResource BoolToVisConverter}}">
-				<TextBlock Style="{StaticResource HeaderText}" Text="Debug Symbols Pattern"/>
-				<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding DebugSymbolsPattern}"/>
-			</StackPanel>
-		</StackPanel>
-	</StackPanel>
+		</ScrollViewer>
+	</DockPanel>
 </Page>

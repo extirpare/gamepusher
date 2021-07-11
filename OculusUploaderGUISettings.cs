@@ -216,6 +216,7 @@ namespace GameUploader
         
         public void Save(string filename)
         {
+            Directory.CreateDirectory(Path.GetDirectoryName(filename));
             using (StreamWriter sw = File.CreateText(filename))
             {
                 XmlSerializer xmls = new XmlSerializer(typeof(OculusUploaderGUISettings));

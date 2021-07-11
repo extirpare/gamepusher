@@ -58,6 +58,7 @@
     <Compile Include="CmdHelper.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="GameUploaderSettings.cs" />
+    <Compile Include="IServicePage.cs" />
     <Compile Include="OculusServicePage.xaml.cs">
       <DependentUpon>OculusServicePage.xaml</DependentUpon>
     </Compile>
