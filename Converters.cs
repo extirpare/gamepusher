@@ -15,9 +15,9 @@ namespace GameUploader.Converters
         {
             var valAsBool = (bool)value;
             if (valAsBool)
-                return "#3300ff00";
+                return "#0800ff00";
             else
-                return "#33ff0000";
+                return "#08ff0000";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -49,9 +49,9 @@ namespace GameUploader.Converters
         {
             var valAsBool = (bool)value;
             if (valAsBool)
-                return "#ff00ff00";
+                return "#8800ff00";
             else
-                return "#ffff0000";
+                return "#88ff0000";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

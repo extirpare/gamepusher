@@ -17,7 +17,7 @@
 	</Page.Resources>
 
 	<DockPanel x:Name="ContentRoot" Background="#1C1E20">
-		<Border x:Name="FinalSectionBorder" DockPanel.Dock="Bottom" BorderBrush="{Binding IsValid, Converter={StaticResource BoolToFGColorConverter}, UpdateSourceTrigger=PropertyChanged}" Background="{Binding IsValid, Converter={StaticResource BoolToBGColorConverter}}" BorderThickness="2,2,2,2" Height="93.6" Margin="0">
+		<Border x:Name="FinalSectionBorder" DockPanel.Dock="Bottom" BorderBrush="{Binding IsValid, Converter={StaticResource BoolToFGColorConverter}, UpdateSourceTrigger=PropertyChanged}" Background="{Binding IsValid, Converter={StaticResource BoolToBGColorConverter}}" BorderThickness="2,2,2,2" Height="80" Margin="0">
 			<StackPanel x:Name="FinalSectionRoot" VerticalAlignment="Center" HorizontalAlignment="Stretch">
 				<TextBlock Text="{Binding ErrorStr}" Visibility="{Binding IsInvalid, Converter={StaticResource BoolToVisConverter}}" FontSize="12" Foreground="White" Margin="3" HorizontalAlignment="Center" FontWeight="Bold" />
 				<Button x:Name="UploadButton" Style="{StaticResource DarkButton}" IsEnabled="{Binding IsValid}" Opacity="{Binding IsValid, Converter={StaticResource BoolToOpacityConverter}}" Padding="6" Content="Upload Build" HorizontalAlignment="Center" Click="UploadBuildButton_Click"/>

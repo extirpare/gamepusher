@@ -1,24 +1,23 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace GameUploader
 {
 	public partial class SteamServicePage : Page, IServicePage
 	{
         SteamSettings m_settings;
+
+		static string VDFPath
+		{ get {
+			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GameUploader", "steam-build-script.vdf");
+		} }
 
 		public SteamServicePage()
 		{
@@ -52,19 +51,62 @@ namespace GameUploader
 				m_settings.PathToExe = openFileDialog.FileName;
 		}
 
-		private void PathToBuild_Button_Click(object sender, RoutedEventArgs e)
+		private void BuildPath_BrowseButton_Click(object sender, RoutedEventArgs e)
 		{
+			CommonOpenFileDialog openPathDialog = new CommonOpenFileDialog();
+			openPathDialog.Multiselect = false;
+			openPathDialog.IsFolderPicker = true;
+			openPathDialog.InitialDirectory = !string.IsNullOrEmpty(m_settings.BuildPath) 
+				? Path.GetFullPath(m_settings.BuildPath) 
+				: Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
 
+			if (openPathDialog.ShowDialog() == CommonFileDialogResult.Ok)
+				m_settings.BuildPath = openPathDialog.FileName;
 		}
 
-		private void OptionalSettingsDropdown_Button_Click(object sender, RoutedEventArgs e)
+		private void ViewPasswordButton_Click(object sender, RoutedEventArgs e)
 		{
 
 		}
 
 		private void UploadButton_Click(object sender, RoutedEventArgs e)
 		{
+			m_settings.Save(SteamSettings.DefaultPath);
+			GenerateVDF();
 
+			/*
+			 * todo if you write to log as you're uploading because it's part of upload folder.... shit gets weird
+			var cmdStr = new StringBuilder();
+			cmdStr.Append(m_settings.PathToExe);
+			cmdStr.Append($" +login {m_settings.AccountName} {m_settings.AccountPassword}");
+			cmdStr.Append($" +run_app_build {VDFPath}");
+			cmdStr.Append($" +quit");
+
+			CmdHelper.RunCmd(cmdStr.ToString(), true);
+			*/
+		}
+
+		private void GenerateVDF()
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine($"\"AppBuild\" {{");
+			sb.AppendLine($" \"AppID\" \"{m_settings.AppID}\"");
+			sb.AppendLine($" \"Desc\" \"{m_settings.BuildDescription}\"");
+			sb.AppendLine($" \"ContentRoot\" \"{m_settings.BuildPath}\"");
+			sb.AppendLine($" \"BuildOutput\" \"{Path.Combine(m_settings.BuildPath, "output")}\"");
+			sb.AppendLine($" \"Depots\" {{");
+			sb.AppendLine($"  \"{m_settings.DepotID}\" {{");
+			sb.AppendLine($"   \"FileMapping\" {{");
+			sb.AppendLine($"    \"LocalPath\" \"*\""); //all files from the BuildPath folder...
+			sb.AppendLine($"    \"DepotPath\" \".\""); //...are mapped into the root of our depot...
+			sb.AppendLine($"    \"recursive\" \"1\""); //...including subfolders
+			sb.AppendLine($"   }}");
+			sb.AppendLine($"  }}");
+			sb.AppendLine($" }}");
+			sb.AppendLine($"}}");
+
+            Directory.CreateDirectory(Path.GetDirectoryName(VDFPath));
+			File.WriteAllText(VDFPath, sb.ToString());
 		}
 	}
 }

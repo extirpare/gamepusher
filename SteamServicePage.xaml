@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GameUploader"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="400"
       Title="Steam">
 
 	<Page.Resources>
@@ -17,7 +17,7 @@
 	</Page.Resources>
 
 	<DockPanel x:Name="ContentRoot" Background="#1C1E20">
-		<Border x:Name="FinalSectionBorder" DockPanel.Dock="Bottom" BorderBrush="{Binding IsValid, Converter={StaticResource BoolToFGColorConverter}, UpdateSourceTrigger=PropertyChanged}" Background="{Binding IsValid, Converter={StaticResource BoolToBGColorConverter}}" BorderThickness="2,2,2,2" Height="93.6" Margin="0">
+		<Border x:Name="FinalSectionBorder" DockPanel.Dock="Bottom" BorderBrush="{Binding IsValid, Converter={StaticResource BoolToFGColorConverter}, UpdateSourceTrigger=PropertyChanged}" Background="{Binding IsValid, Converter={StaticResource BoolToBGColorConverter}}" BorderThickness="2,2,2,2" Height="80" Margin="0">
 			<StackPanel x:Name="FinalSectionRoot" VerticalAlignment="Center" HorizontalAlignment="Stretch">
 				<TextBlock Text="{Binding ErrorStr}" Visibility="{Binding IsInvalid, Converter={StaticResource BoolToVisConverter}}" FontSize="12" Foreground="White" Margin="3" HorizontalAlignment="Center" FontWeight="Bold" />
 				<Button x:Name="UploadButton" Style="{StaticResource DarkButton}" IsEnabled="{Binding IsValid}" Opacity="{Binding IsValid, Converter={StaticResource BoolToOpacityConverter}}" Padding="6" Content="Upload Build" HorizontalAlignment="Center" Click="UploadButton_Click"/>
@@ -57,6 +57,31 @@
 					<StackPanel x:Name="AccountPasswordPanel" Orientation="Vertical">
 						<TextBlock Style="{StaticResource HeaderText}" Text="Account Password" />
 						<TextBox Style="{StaticResource DarkTextBox}" FontFamily="./Resources/#Password" Text="{Binding AccountPassword}" />
+						<Button Style="{StaticResource DarkButton}" Click="ViewPasswordButton_Click" Width="13" Height="13" HorizontalAlignment="Right" Margin="0,-15,3,0" Panel.ZIndex="1">
+							<Image Source="Images/eye.png"/>
+						</Button>
+					</StackPanel>
+				</StackPanel>
+				<StackPanel x:Name="ThisBuildPanel" Orientation="Vertical" Margin="0,20,0,0">
+					<StackPanel x:Name="BuildDescription" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Build Description"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding BuildDescription}"/>
+					</StackPanel>
+					<StackPanel x:Name="DepotID" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Depot ID"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding DepotID}"/>
+					</StackPanel>
+					<StackPanel x:Name="BuildPath" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Build Path"/>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="10"/>
+								<ColumnDefinition Width="80"/>
+							</Grid.ColumnDefinitions>
+							<TextBox Style="{StaticResource DarkTextBox}" x:Name="BuildPath_TextBox" Grid.Column="0" Text="{Binding BuildPath}"/>
+							<Button Style="{StaticResource DarkButton}" Content="Browse..." Grid.Column="2" Click="BuildPath_BrowseButton_Click"/>
+						</Grid>
 					</StackPanel>
 				</StackPanel>
 			</StackPanel>

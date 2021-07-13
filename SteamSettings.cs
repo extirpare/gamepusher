@@ -47,6 +47,13 @@ namespace GameUploader
             set { m_appID = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null)); }
         }
 
+        private string m_buildDescription = "";
+        public string BuildDescription
+        {
+            get { return m_buildDescription; }
+            set { m_buildDescription = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null)); }
+        }
+
         private string m_depotID = "";
         public string DepotID
         {
@@ -104,6 +111,11 @@ namespace GameUploader
             Success,
             NoExe,
             NoAccountName,
+            NoAccountPassword,
+            NoAppID,
+            NoBuildDescription,
+            NoDepotID,
+            NoBuildPath,
         }
 
         public eErrorCode CalcError()
@@ -112,6 +124,16 @@ namespace GameUploader
                 return eErrorCode.NoExe;
             if (string.IsNullOrWhiteSpace(AccountName))
                 return eErrorCode.NoAccountName;
+            if (string.IsNullOrWhiteSpace(AccountPassword))
+                return eErrorCode.NoAccountPassword;
+            if (string.IsNullOrWhiteSpace(AppID))
+                return eErrorCode.NoAppID;
+            if (string.IsNullOrWhiteSpace(BuildDescription))
+                return eErrorCode.NoBuildDescription;
+            if (string.IsNullOrWhiteSpace(DepotID))
+                return eErrorCode.NoDepotID;
+            if (string.IsNullOrWhiteSpace(BuildPath))
+                return eErrorCode.NoBuildPath;
 
             return eErrorCode.Success;
         }
@@ -126,6 +148,16 @@ namespace GameUploader
                     return "Invalid path to steamcmd.exe";
                 case eErrorCode.NoAccountName:
                     return "Invalid Account Name";
+                case eErrorCode.NoAccountPassword:
+                    return "Invalid Account Password";
+                case eErrorCode.NoAppID:
+                    return "Invalid AppID";
+                case eErrorCode.NoBuildDescription:
+                    return "Invalid Build Description";
+                case eErrorCode.NoDepotID:
+                    return "Invalid Depot ID";
+                case eErrorCode.NoBuildPath:
+                    return "Invalid Build Path";
                 default:
                     return "Unknown Error";
             }
