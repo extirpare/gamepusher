@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Width="520" 
     Height="430"
-    Title="Game Uploader">
+    Title="Game Uploader" MinWidth="300" MinHeight="250">
 	
 	<Window.Resources>
 		<ResourceDictionary>

@@ -28,12 +28,10 @@ namespace GameUploader
             SetServicePage(null);
         }
 
-
         private void SelectServiceButton_Oculus_Click(object sender, RoutedEventArgs e)
         {
             SetServicePage(new OculusServicePage());
         }
-
 
         private void SelectServiceButton_Steam_Click(object sender, RoutedEventArgs e)
         {
@@ -43,12 +41,14 @@ namespace GameUploader
         void SetServicePage(IServicePage newPage)
 		{
             if (newPage == m_currPage) return;
-            if (newPage != null && m_currPage != null && newPage.GetType() == m_currPage.GetType()) return;
-            if (m_currPage != null) m_currPage.OnExited();
+            if (m_currPage != null && newPage != null && newPage.GetType() == m_currPage.GetType()) return;
+
+            if (m_currPage != null)
+                m_currPage.OnExited();
 
             m_currPage = newPage;
             ServiceFrame.Navigate(m_currPage);
-            m_currPage.OnEntered();
+            m_currPage?.OnEntered();
         }
     }
 }

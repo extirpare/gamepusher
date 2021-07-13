@@ -8,7 +8,58 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Steam">
 
-    <Grid>
-        
-    </Grid>
+	<Page.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="pack://application:,,,/Resources/Shared.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Page.Resources>
+
+	<DockPanel x:Name="ContentRoot" Background="#1C1E20">
+		<Border x:Name="FinalSectionBorder" DockPanel.Dock="Bottom" BorderBrush="{Binding IsValid, Converter={StaticResource BoolToFGColorConverter}, UpdateSourceTrigger=PropertyChanged}" Background="{Binding IsValid, Converter={StaticResource BoolToBGColorConverter}}" BorderThickness="2,2,2,2" Height="93.6" Margin="0">
+			<StackPanel x:Name="FinalSectionRoot" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+				<TextBlock Text="{Binding ErrorStr}" Visibility="{Binding IsInvalid, Converter={StaticResource BoolToVisConverter}}" FontSize="12" Foreground="White" Margin="3" HorizontalAlignment="Center" FontWeight="Bold" />
+				<Button x:Name="UploadButton" Style="{StaticResource DarkButton}" IsEnabled="{Binding IsValid}" Opacity="{Binding IsValid, Converter={StaticResource BoolToOpacityConverter}}" Padding="6" Content="Upload Build" HorizontalAlignment="Center" Click="UploadButton_Click"/>
+			</StackPanel>
+		</Border>
+		<ScrollViewer x:Name="ContentRootScroll" DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+			<StackPanel Orientation="Vertical" Margin="10,20">
+				<Border x:Name="TitlePanel" Background="#7F024ABE" CornerRadius="8" Padding="16,4,16,4" Margin="0,0,0,10">
+					<StackPanel Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Steam" FontWeight="Bold" FontSize="16" Margin="0,0,0,-3" />
+						<TextBlock><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://partner.steamgames.com/doc/sdk/uploading" Foreground="#FF91E5BF"><Run Text="Documentation"/></Hyperlink></TextBlock>
+					</StackPanel>
+				</Border>
+				<StackPanel x:Name="MetaSettingsPanel" Orientation="Vertical">
+					<StackPanel x:Name="PathToExePanel" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Path to steamcmd.exe"/>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="10"/>
+								<ColumnDefinition Width="80"/>
+							</Grid.ColumnDefinitions>
+							<TextBox Style="{StaticResource DarkTextBox}" x:Name="PathToExe_TextBox" Grid.Column="0" Text="{Binding PathToExe}"/>
+							<Button Style="{StaticResource DarkButton}" Content="Browse..." Grid.Column="2" Click="PathToExe_BrowseButton_Click"/>
+						</Grid>
+					</StackPanel>
+				</StackPanel>
+				<StackPanel x:Name="AppSettingsPanel" Orientation="Vertical" Margin="0,20,0,0">
+					<StackPanel x:Name="AppIDPanel" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="App ID"/>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AppID}"/>
+					</StackPanel>
+					<StackPanel x:Name="AccountNamePanel" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Account Name" />
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AccountName}"/>
+					</StackPanel>
+					<StackPanel x:Name="AccountPasswordPanel" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Account Password" />
+						<TextBox Style="{StaticResource DarkTextBox}" FontFamily="./Resources/#Password" Text="{Binding AccountPassword}" />
+					</StackPanel>
+				</StackPanel>
+			</StackPanel>
+		</ScrollViewer>
+	</DockPanel>
 </Page>

@@ -9,11 +9,11 @@ using System.Xml.Serialization;
 
 namespace GameUploader
 {
-    public class OculusUploaderGUISettings : INotifyPropertyChanged
+    public class OculusSettings : INotifyPropertyChanged
     {
         public static string DefaultPath
         { get {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OculusUploaderGUI", "settings.xml");
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GameUploader", "oculus-settings.xml");
         } }
 
         public enum eCredentialsSource { UserToken, AppSecret };
@@ -208,6 +208,7 @@ namespace GameUploader
                 else
                     return count.ToString() + " Optional Settings Applied";
             } }
+
         //
         // EVERYTHING ELSE
         //
@@ -219,20 +220,20 @@ namespace GameUploader
             Directory.CreateDirectory(Path.GetDirectoryName(filename));
             using (StreamWriter sw = File.CreateText(filename))
             {
-                XmlSerializer xmls = new XmlSerializer(typeof(OculusUploaderGUISettings));
+                XmlSerializer xmls = new XmlSerializer(typeof(OculusSettings));
                 xmls.Serialize(sw, this);
             }
         }
 
-        public static OculusUploaderGUISettings Load(string filename)
+        public static OculusSettings Load(string filename)
         {
             if (!File.Exists(filename))
-                return new OculusUploaderGUISettings();
+                return new OculusSettings();
 
             using (StreamReader sw = new StreamReader(filename))
             {
-                XmlSerializer xmls = new XmlSerializer(typeof(OculusUploaderGUISettings));
-                return xmls.Deserialize(sw) as OculusUploaderGUISettings;
+                XmlSerializer xmls = new XmlSerializer(typeof(OculusSettings));
+                return xmls.Deserialize(sw) as OculusSettings;
             }
         }
 

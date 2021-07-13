@@ -18,7 +18,7 @@ namespace GameUploader
 {
 	public partial class OculusServicePage : Page, IServicePage
 	{
-        OculusUploaderGUISettings m_settings;
+        OculusSettings m_settings;
 
 		public OculusServicePage()
 		{
@@ -27,13 +27,13 @@ namespace GameUploader
 
         public void OnEntered()
         {
-            m_settings = OculusUploaderGUISettings.Load(OculusUploaderGUISettings.DefaultPath);
+            m_settings = OculusSettings.Load(OculusSettings.DefaultPath);
             DataContext = m_settings;
         }
 
         public void OnExited()
         {
-            m_settings.Save(OculusUploaderGUISettings.DefaultPath);
+            m_settings.Save(OculusSettings.DefaultPath);
         }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
@@ -74,7 +74,7 @@ namespace GameUploader
 
         private void UploadBuildButton_Click(object sender, RoutedEventArgs e)
         {
-            m_settings.Save(OculusUploaderGUISettings.DefaultPath);
+            m_settings.Save(OculusSettings.DefaultPath);
 
             if (!IsValidOculusExe(m_settings.PathToOculusExe))
             {
@@ -90,15 +90,15 @@ namespace GameUploader
             cmdStr.Append(' ');
             switch (m_settings.Platform)
             {
-                case OculusUploaderGUISettings.ePlatform.Quest: cmdStr.Append("upload-quest-build"); break;
-                case OculusUploaderGUISettings.ePlatform.Rift: cmdStr.Append("upload-rift-build"); break;
+                case OculusSettings.ePlatform.Quest: cmdStr.Append("upload-quest-build"); break;
+                case OculusSettings.ePlatform.Rift: cmdStr.Append("upload-rift-build"); break;
                 default: throw new Exception();
             }
             cmdStr.Append(" --app_id \"" + m_settings.AppID + '"');
             switch (m_settings.CredentialsSource)
             {
-                case OculusUploaderGUISettings.eCredentialsSource.AppSecret: cmdStr.Append(" --app_secret " + m_settings.AppSecret); break;
-                case OculusUploaderGUISettings.eCredentialsSource.UserToken: cmdStr.Append(" --token " + m_settings.UserToken); break;
+                case OculusSettings.eCredentialsSource.AppSecret: cmdStr.Append(" --app_secret " + m_settings.AppSecret); break;
+                case OculusSettings.eCredentialsSource.UserToken: cmdStr.Append(" --token " + m_settings.UserToken); break;
                 default: throw new Exception();
             }
             cmdStr.Append(" --apk \"" + m_settings.PathToAPK + '"');

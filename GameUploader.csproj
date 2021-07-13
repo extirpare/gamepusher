@@ -62,10 +62,11 @@
     <Compile Include="OculusServicePage.xaml.cs">
       <DependentUpon>OculusServicePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OculusUploaderGUISettings.cs" />
+    <Compile Include="OculusSettings.cs" />
     <Compile Include="SteamServicePage.xaml.cs">
       <DependentUpon>SteamServicePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SteamSettings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -114,6 +115,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\password.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

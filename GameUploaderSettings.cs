@@ -30,20 +30,20 @@ namespace GameUploader
         {
             using (StreamWriter sw = File.CreateText(filename))
             {
-                XmlSerializer xmls = new XmlSerializer(typeof(OculusUploaderGUISettings));
+                XmlSerializer xmls = new XmlSerializer(typeof(OculusSettings));
                 xmls.Serialize(sw, this);
             }
         }
 
-        public static OculusUploaderGUISettings Load(string filename)
+        public static OculusSettings Load(string filename)
         {
             if (!File.Exists(filename))
-                return new OculusUploaderGUISettings();
+                return new OculusSettings();
 
             using (StreamReader sw = new StreamReader(filename))
             {
-                XmlSerializer xmls = new XmlSerializer(typeof(OculusUploaderGUISettings));
-                return xmls.Deserialize(sw) as OculusUploaderGUISettings;
+                XmlSerializer xmls = new XmlSerializer(typeof(OculusSettings));
+                return xmls.Deserialize(sw) as OculusSettings;
             }
         }
     }
