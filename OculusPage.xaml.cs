@@ -16,11 +16,12 @@ using System.Windows.Shapes;
 
 namespace GameUploader
 {
-	public partial class OculusServicePage : Page, IServicePage
+	public partial class OculusPage : Page, IServicePage
 	{
+		public string ServiceName { get { return "Oculus"; } }
         OculusSettings m_settings;
 
-		public OculusServicePage()
+        public OculusPage()
 		{
 			InitializeComponent();
         }

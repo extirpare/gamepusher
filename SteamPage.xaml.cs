@@ -10,8 +10,9 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace GameUploader
 {
-	public partial class SteamServicePage : Page, IServicePage
+	public partial class SteamPage : Page, IServicePage
 	{
+		public string ServiceName { get { return "Steam"; } }
         SteamSettings m_settings;
 
 		static string VDFPath
@@ -19,7 +20,7 @@ namespace GameUploader
 			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GameUploader", "steam-build-script.vdf");
 		} }
 
-		public SteamServicePage()
+		public SteamPage()
 		{
 			InitializeComponent();
 		}

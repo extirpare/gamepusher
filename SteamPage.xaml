@@ -1,4 +1,4 @@
-﻿<Page x:Class="GameUploader.SteamServicePage"
+﻿<Page x:Class="GameUploader.SteamPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,14 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="400"
       Title="Steam">
-
-	<Page.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="pack://application:,,,/Resources/Shared.xaml"/>
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
-	</Page.Resources>
 
 	<DockPanel x:Name="ContentRoot" Background="#1C1E20">
 		<Border x:Name="FinalSectionBorder" DockPanel.Dock="Bottom" BorderBrush="{Binding IsValid, Converter={StaticResource BoolToFGColorConverter}, UpdateSourceTrigger=PropertyChanged}" Background="{Binding IsValid, Converter={StaticResource BoolToBGColorConverter}}" BorderThickness="2,2,2,2" Height="80" Margin="0">

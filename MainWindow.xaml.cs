@@ -20,22 +20,31 @@ namespace GameUploader
         public MainWindow()
         {
             InitializeComponent();
-            SetServicePage(new OculusServicePage());
+            
+            DataContext = MetaSettings.Instance;
+            
+            SetServicePage(new OculusPage());
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            MetaSettings.Instance.Save(MetaSettings.DefaultPath);
             SetServicePage(null);
         }
 
         private void SelectServiceButton_Oculus_Click(object sender, RoutedEventArgs e)
         {
-            SetServicePage(new OculusServicePage());
+            SetServicePage(new OculusPage());
         }
 
         private void SelectServiceButton_Steam_Click(object sender, RoutedEventArgs e)
         {
-            SetServicePage(new SteamServicePage());
+            SetServicePage(new SteamPage());
+        }
+
+        private void SelectServiceButton_Settings_Click(object sender, RoutedEventArgs e)
+        {
+            SetServicePage(new SettingsPage());
         }
 
         void SetServicePage(IServicePage newPage)
@@ -48,7 +57,12 @@ namespace GameUploader
 
             m_currPage = newPage;
             ServiceFrame.Navigate(m_currPage);
-            m_currPage?.OnEntered();
+
+            if (m_currPage != null)
+			{
+                m_currPage.OnEntered();
+                MetaSettings.Instance.CurrPage = m_currPage.ServiceName;
+            }
         }
     }
 }

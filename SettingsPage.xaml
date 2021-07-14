@@ -1,0 +1,34 @@
+﻿<Page x:Class="GameUploader.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GameUploader"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="400"
+      Title="Settings">
+
+	<DockPanel x:Name="ContentRoot" Background="#1C1E20">
+		<ScrollViewer x:Name="ContentRootScroll" DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+			<StackPanel Orientation="Vertical" Margin="10,20">
+				<Border x:Name="TitlePanel" Background="#7F024ABE" CornerRadius="8" Padding="16,4,16,4" Margin="0,0,0,10">
+					<StackPanel Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Settings" FontWeight="Bold" FontSize="16" Margin="0,0,0,-3" />
+					</StackPanel>
+				</Border>
+				<StackPanel x:Name="PathToSettings" Orientation="Vertical">
+					<TextBlock Style="{StaticResource HeaderText}" Text="Settings &amp; Starting Values Folder"/>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="10"/>
+							<ColumnDefinition Width="80"/>
+						</Grid.ColumnDefinitions>
+						<TextBox Style="{StaticResource DarkTextBox}" x:Name="PathToSettings_TextBox" Grid.Column="0" Text="{Binding PathToSettings}"/>
+						<Button Style="{StaticResource DarkButton}" Content="Browse..." Grid.Column="2" Click="PathToSettings_BrowseButton_Click"/>
+					</Grid>
+				</StackPanel>
+			</StackPanel>
+		</ScrollViewer>
+	</DockPanel>
+</Page>

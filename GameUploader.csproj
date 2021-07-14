@@ -68,13 +68,17 @@
     <Compile Include="Converters.cs" />
     <Compile Include="GameUploaderSettings.cs" />
     <Compile Include="IServicePage.cs" />
-    <Compile Include="OculusServicePage.xaml.cs">
-      <DependentUpon>OculusServicePage.xaml</DependentUpon>
+    <Compile Include="OculusPage.xaml.cs">
+      <DependentUpon>OculusPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="OculusSettings.cs" />
-    <Compile Include="SteamServicePage.xaml.cs">
-      <DependentUpon>SteamServicePage.xaml</DependentUpon>
+    <Compile Include="SteamPage.xaml.cs">
+      <DependentUpon>SteamPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MetaSettings.cs" />
     <Compile Include="SteamSettings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -88,7 +92,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OculusServicePage.xaml">
+    <Page Include="OculusPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -96,7 +100,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SteamServicePage.xaml">
+    <Page Include="SteamPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -136,6 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\eye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\settings.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

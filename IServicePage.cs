@@ -8,6 +8,7 @@ namespace GameUploader
 {
 	interface IServicePage
 	{
+		string ServiceName { get; }
 		void OnEntered();
 		void OnExited();
 	}
