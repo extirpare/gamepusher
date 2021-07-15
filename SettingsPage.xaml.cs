@@ -13,7 +13,6 @@ namespace GameUploader
 	public partial class SettingsPage : Page, IServicePage
 	{
 		public string ServiceName { get { return "Settings"; } }
-        SteamSettings m_settings;
 
 		public SettingsPage()
 		{
@@ -22,24 +21,28 @@ namespace GameUploader
 
 		public void OnEntered()
 		{
-			m_settings = SteamSettings.Load(SteamSettings.DefaultPath);
-			DataContext = m_settings;
+			DataContext = MetaSettings.Instance;
 		}
 		 
 		public void OnExited()
 		{
-			m_settings.Save(SteamSettings.DefaultPath);
+			MetaSettings.Instance.Save();
 		}
 
-		private void PathToSettings_BrowseButton_Click(object sender, RoutedEventArgs e)
+		private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
 		{
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			openFileDialog.Multiselect = false;
-			openFileDialog.Filter = "Exe files (*.exe)|*.exe";
-			openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+			System.Diagnostics.Process.Start(e.Uri.AbsoluteUri);
+			e.Handled = true;
+		}
 
-			if (openFileDialog.ShowDialog() == true)
-				m_settings.PathToExe = openFileDialog.FileName;
+		private void SavePasswordsBox_Checked(object sender, RoutedEventArgs e)
+		{
+			MetaSettings.Instance.SavePasswords = true;
+		}
+
+		private void SavePasswordsBox_Unchecked(object sender, RoutedEventArgs e)
+		{
+			MetaSettings.Instance.SavePasswords = false;
 		}
 	}
 }

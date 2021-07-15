@@ -25,7 +25,11 @@
 				</Border>
 				<StackPanel x:Name="MetaSettingsPanel" Orientation="Vertical">
 					<StackPanel x:Name="PathToExePanel" Orientation="Vertical">
-						<TextBlock Style="{StaticResource HeaderText}" Text="Path to steamcmd.exe"/>
+						<TextBlock Style="{StaticResource HeaderText}" Text="Path to steamcmd.exe">
+							<ToolTipService.ToolTip>
+								<ToolTip Content="This file is part of the Steamworks API. You can find it in the ContentBuilder/builder folder."/>
+							</ToolTipService.ToolTip>
+						</TextBlock>
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*"/>
@@ -39,17 +43,38 @@
 				</StackPanel>
 				<StackPanel x:Name="AppSettingsPanel" Orientation="Vertical" Margin="0,20,0,0">
 					<StackPanel x:Name="AppIDPanel" Orientation="Vertical">
-						<TextBlock Style="{StaticResource HeaderText}" Text="App ID"/>
+						<TextBlock Style="{StaticResource HeaderText}" Text="App ID">
+							<ToolTipService.ToolTip>
+								<ToolTip Content="The AppID of the game on Steam. Your account must have privileges to modify this app."/>
+							</ToolTipService.ToolTip>
+						</TextBlock>
 						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AppID}"/>
 					</StackPanel>
 					<StackPanel x:Name="AccountNamePanel" Orientation="Vertical">
-						<TextBlock Style="{StaticResource HeaderText}" Text="Account Name" />
+						<TextBlock Style="{StaticResource HeaderText}" Text="Account Name">
+							<ToolTipService.ToolTip>
+								<ToolTip Content="The name of the account that has privileges to modify this app."/>
+							</ToolTipService.ToolTip>
+						</TextBlock>
 						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AccountName}"/>
 					</StackPanel>
 					<StackPanel x:Name="AccountPasswordPanel" Orientation="Vertical">
-						<TextBlock Style="{StaticResource HeaderText}" Text="Account Password" />
-						<TextBox Style="{StaticResource DarkTextBox}" FontFamily="./Resources/#Password" Text="{Binding AccountPassword}" />
-						<Button Style="{StaticResource DarkButton}" Click="ViewPasswordButton_Click" Width="13" Height="13" HorizontalAlignment="Right" Margin="0,-15,3,0" Panel.ZIndex="1">
+						<TextBlock Style="{StaticResource HeaderText}" Text="Account Password">
+							<ToolTipService.ToolTip>
+								<ToolTip>
+									<TextBlock>
+										The password of the account that has privileges to modify this app.<LineBreak/>
+										 If you're security-minded, un-check the 'Save Passwords' toggle in Settings to avoid saving this.
+										</TextBlock>
+									</ToolTip>
+							</ToolTipService.ToolTip>
+						</TextBlock>
+						<TextBox x:Name="PasswordText_Hidden" Style="{StaticResource DarkTextBox}" Text="{Binding AccountPassword}" FontFamily="./Resources/password.ttf #Password" />
+						<Button x:Name="PasswordButton_Hidden" Style="{StaticResource DarkButton}" Click="PasswordButton_Hidden_Click" Width="20" Height="13" HorizontalAlignment="Right" Margin="0,-15,3,0" Panel.ZIndex="1">
+							<Image Source="Images/eye.png"/>
+						</Button>
+						<TextBox x:Name="PasswordText_Revealed" Visibility="Collapsed" Style="{StaticResource DarkTextBox}" Text="{Binding AccountPassword}" />
+						<Button x:Name="PasswordButton_Revealed" Visibility="Collapsed" Style="{StaticResource DarkButton_On}" Click="PasswordButton_Revealed_Click" Width="20" Height="13" HorizontalAlignment="Right" Margin="0,-15,3,0" Panel.ZIndex="1">
 							<Image Source="Images/eye.png"/>
 						</Button>
 					</StackPanel>

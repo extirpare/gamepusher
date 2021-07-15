@@ -16,18 +16,23 @@
 						<TextBlock Style="{StaticResource HeaderText}" Text="Settings" FontWeight="Bold" FontSize="16" Margin="0,0,0,-3" />
 					</StackPanel>
 				</Border>
-				<StackPanel x:Name="PathToSettings" Orientation="Vertical">
-					<TextBlock Style="{StaticResource HeaderText}" Text="Settings &amp; Starting Values Folder"/>
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*"/>
-							<ColumnDefinition Width="10"/>
-							<ColumnDefinition Width="80"/>
-						</Grid.ColumnDefinitions>
-						<TextBox Style="{StaticResource DarkTextBox}" x:Name="PathToSettings_TextBox" Grid.Column="0" Text="{Binding PathToSettings}"/>
-						<Button Style="{StaticResource DarkButton}" Content="Browse..." Grid.Column="2" Click="PathToSettings_BrowseButton_Click"/>
-					</Grid>
+				<StackPanel HorizontalAlignment="Center">
+					<CheckBox Content="Save Passwords?" IsChecked="{Binding SavePasswords}" Checked="SavePasswordsBox_Checked" Unchecked="SavePasswordsBox_Unchecked"/>
 				</StackPanel>
+				<Border BorderBrush="#44888888" Background="#11888888" BorderThickness="1" Padding="10,5" Margin="0,30,0,0">
+					<StackPanel Orientation="Vertical">
+						<TextBlock Style="{StaticResource BodyText}">GamePusher is free and open-source software.</TextBlock>
+						<TextBlock Style="{StaticResource BodyText}">You can get updates, or contribute to its development, at this link:</TextBlock>
+						<TextBlock><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/extirpare/gamepusher"><Image Source="./Images/github-logo.png" Margin="0,0,3,0" Width="11" Height="11"/><Run Text="GamePusher on GitHub"/></Hyperlink></TextBlock>
+						<TextBlock Style="{StaticResource BodyText}" Margin="0,15,0,0">The following people contribute to GamePusher development:</TextBlock>
+						<BulletDecorator>
+							<BulletDecorator.Bullet>
+								<Ellipse Height="5" Width="5" Fill="White" />
+							</BulletDecorator.Bullet>
+							<TextBlock Style="{StaticResource BodyText}" Margin="5,0,0,0">Ben Walker <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://twitter.com/walkerb"><Image Source="./Images/twitter-logo.png" Margin="0,0,3,0" Width="11" Height="11"/>Twitter</Hyperlink></TextBlock>
+						</BulletDecorator>
+					</StackPanel>
+				</Border>
 			</StackPanel>
 		</ScrollViewer>
 	</DockPanel>

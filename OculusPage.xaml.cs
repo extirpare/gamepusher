@@ -28,18 +28,19 @@ namespace GameUploader
 
         public void OnEntered()
         {
-            m_settings = OculusSettings.Load(OculusSettings.DefaultPath);
+            m_settings = OculusSettings.Load();
             DataContext = m_settings;
         }
 
         public void OnExited()
         {
-            m_settings.Save(OculusSettings.DefaultPath);
+            m_settings.Save();
         }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
             System.Diagnostics.Process.Start(e.Uri.AbsoluteUri);
+            e.Handled = true;
         }
 
         private void PathToOculusExe_BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -75,7 +76,7 @@ namespace GameUploader
 
         private void UploadBuildButton_Click(object sender, RoutedEventArgs e)
         {
-            m_settings.Save(OculusSettings.DefaultPath);
+            m_settings.Save();
 
             if (!IsValidOculusExe(m_settings.PathToOculusExe))
             {

@@ -10,10 +10,7 @@ namespace GameUploader
 {
 	public class SteamSettings : INotifyPropertyChanged
 	{
-        public static string DefaultPath
-        { get {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GameUploader", "steam-settings.xml");
-        } }
+        public static string SavePath { get { return Path.Combine(MetaSettings.ParentFolderPath, "steam-settings.xml"); } }
 
         //
         // REQUIRED SETTINGS READ/WRITE
@@ -68,7 +65,6 @@ namespace GameUploader
             set { m_buildPath = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null)); }
         }
 
-
         //
         // READ-ONLY SETTINGS
         //
@@ -84,22 +80,26 @@ namespace GameUploader
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void Save(string filename)
+        public void Save()
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(filename));
-            using (StreamWriter sw = File.CreateText(filename))
+            string passwordCopy = m_accountPassword;
+            if (!MetaSettings.Instance.SavePasswords)
+                m_accountPassword = "";
+            
+            Directory.CreateDirectory(Path.GetDirectoryName(SavePath));
+            using (StreamWriter sw = File.CreateText(SavePath))
             {
                 XmlSerializer xmls = new XmlSerializer(typeof(SteamSettings));
                 xmls.Serialize(sw, this);
             }
+
+            m_accountPassword = passwordCopy;
         }
 
-        public static SteamSettings Load(string filename)
+        public static SteamSettings Load()
         {
-            if (!File.Exists(filename))
-                return new SteamSettings();
-
-            using (StreamReader sw = new StreamReader(filename))
+            if (!File.Exists(SavePath)) return new SteamSettings();
+            using (StreamReader sw = new StreamReader(SavePath))
             {
                 XmlSerializer xmls = new XmlSerializer(typeof(SteamSettings));
                 return xmls.Deserialize(sw) as SteamSettings;

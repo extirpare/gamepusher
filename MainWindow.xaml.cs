@@ -22,13 +22,18 @@ namespace GameUploader
             InitializeComponent();
             
             DataContext = MetaSettings.Instance;
-            
-            SetServicePage(new OculusPage());
+
+			switch (MetaSettings.Instance.CurrPage)
+			{
+                case "Steam": SetServicePage(new SteamPage()); break;
+                case "Settings": SetServicePage(new SettingsPage()); break;
+                case "Oculus": default: SetServicePage(new OculusPage()); break;
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MetaSettings.Instance.Save(MetaSettings.DefaultPath);
+            MetaSettings.Instance.Save();
             SetServicePage(null);
         }
 

@@ -27,18 +27,19 @@ namespace GameUploader
 
 		public void OnEntered()
 		{
-			m_settings = SteamSettings.Load(SteamSettings.DefaultPath);
+			m_settings = SteamSettings.Load();
 			DataContext = m_settings;
 		}
 
 		public void OnExited()
 		{
-			m_settings.Save(SteamSettings.DefaultPath);
+			m_settings.Save();
 		}
 
 		private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
 		{
 			System.Diagnostics.Process.Start(e.Uri.AbsoluteUri);
+			e.Handled = true;
 		}
 
 		private void PathToExe_BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -65,14 +66,25 @@ namespace GameUploader
 				m_settings.BuildPath = openPathDialog.FileName;
 		}
 
-		private void ViewPasswordButton_Click(object sender, RoutedEventArgs e)
+		private void PasswordButton_Hidden_Click(object sender, RoutedEventArgs e)
 		{
+			PasswordButton_Hidden.Visibility = Visibility.Collapsed;
+			PasswordText_Hidden.Visibility = Visibility.Collapsed;
+			PasswordButton_Revealed.Visibility = Visibility.Visible;
+			PasswordText_Revealed.Visibility = Visibility.Visible;
+		}
 
+		private void PasswordButton_Revealed_Click(object sender, RoutedEventArgs e)
+		{
+			PasswordButton_Hidden.Visibility = Visibility.Visible;
+			PasswordText_Hidden.Visibility = Visibility.Visible;
+			PasswordButton_Revealed.Visibility = Visibility.Collapsed;
+			PasswordText_Revealed.Visibility = Visibility.Collapsed;
 		}
 
 		private void UploadButton_Click(object sender, RoutedEventArgs e)
 		{
-			m_settings.Save(SteamSettings.DefaultPath);
+			m_settings.Save();
 			GenerateVDF();
 
 			/*

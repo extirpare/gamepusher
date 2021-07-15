@@ -28,7 +28,7 @@
 				<Border x:Name="TitlePanel" Background="#7F024ABE" CornerRadius="8" Padding="16,4,16,4" Margin="0,0,0,10">
 					<StackPanel Orientation="Vertical">
 						<TextBlock Style="{StaticResource HeaderText}" Text="Oculus" FontWeight="Bold" FontSize="16" Margin="0,0,0,-3" />
-						<TextBlock><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://developer.oculus.com/distribute/publish-reference-platform-command-line-utility/" Foreground="#FF91E5BF"><Run Text="Documentation"/></Hyperlink></TextBlock>
+						<TextBlock><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://developer.oculus.com/distribute/publish-reference-platform-command-line-utility/" Foreground="#FF91E5BF">Documentation</Hyperlink></TextBlock>
 					</StackPanel>
 				</Border>
 				<StackPanel x:Name="MetaSettingsPanel" Orientation="Vertical">

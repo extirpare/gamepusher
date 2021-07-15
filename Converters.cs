@@ -10,6 +10,14 @@ using System.Windows.Media;
 
 namespace GameUploader.Converters
 {
+    static class Helpers
+    {
+        public static Style FetchStyle(string styleName)
+        {
+            return Application.Current.Resources.MergedDictionaries[0][styleName] as Style;
+        }
+    }
+
     public class BoolToBackgroundColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -44,16 +52,16 @@ namespace GameUploader.Converters
         }
     }
 
-    public class BoolToToggleButtonStyleConverter : IValueConverter
+    public class IsToggledStyleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var valAsBool = (bool)value;
             Style ret;
             if (valAsBool)
-                ret = FetchStyle("DarkButton_On");
+                ret = Helpers.FetchStyle("DarkButton_On");
             else
-                ret = FetchStyle("DarkButton");
+                ret = Helpers.FetchStyle("DarkButton");
             return ret;
         }
 
@@ -61,11 +69,25 @@ namespace GameUploader.Converters
         {
             throw new NotSupportedException("Only one way bindings are supported with this converter");
         }
+    }
 
-        Style FetchStyle(string styleName)
-		{
-            return Application.Current.Resources.MergedDictionaries[0][styleName] as Style;
-		}
+    public class IsPasswordShownStyleConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var valAsBool = (bool)value;
+            Style ret;
+            if (valAsBool)
+                ret = Helpers.FetchStyle("DarkTextBox");
+            else
+                ret = Helpers.FetchStyle("DarkPasswordBox");
+            return ret;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException("Only one way bindings are supported with this converter");
+        }
     }
 
     public class BoolToOpacityConverter : IValueConverter

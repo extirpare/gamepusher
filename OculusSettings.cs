@@ -11,10 +11,7 @@ namespace GameUploader
 {
     public class OculusSettings : INotifyPropertyChanged
     {
-        public static string DefaultPath
-        { get {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GameUploader", "oculus-settings.xml");
-        } }
+        public static string SavePath { get { return Path.Combine(MetaSettings.ParentFolderPath, "oculus-settings.xml"); } }
 
         public enum eCredentialsSource { UserToken, AppSecret };
         public enum ePlatform{ Quest, Rift };
@@ -215,22 +212,20 @@ namespace GameUploader
         
         public event PropertyChangedEventHandler PropertyChanged;
         
-        public void Save(string filename)
+        public void Save()
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(filename));
-            using (StreamWriter sw = File.CreateText(filename))
+            Directory.CreateDirectory(Path.GetDirectoryName(SavePath));
+            using (StreamWriter sw = File.CreateText(SavePath))
             {
                 XmlSerializer xmls = new XmlSerializer(typeof(OculusSettings));
                 xmls.Serialize(sw, this);
             }
         }
 
-        public static OculusSettings Load(string filename)
+        public static OculusSettings Load()
         {
-            if (!File.Exists(filename))
-                return new OculusSettings();
-
-            using (StreamReader sw = new StreamReader(filename))
+            if (!File.Exists(SavePath)) return new OculusSettings();
+            using (StreamReader sw = new StreamReader(SavePath))
             {
                 XmlSerializer xmls = new XmlSerializer(typeof(OculusSettings));
                 return xmls.Deserialize(sw) as OculusSettings;
