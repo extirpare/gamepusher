@@ -26,8 +26,9 @@ namespace GameUploader
 			switch (MetaSettings.Instance.CurrPage)
 			{
                 case "Steam": SetServicePage(new SteamPage()); break;
-                case "Settings": SetServicePage(new SettingsPage()); break;
-                case "Oculus": default: SetServicePage(new OculusPage()); break;
+                case "Itch": SetServicePage(new ItchPage()); break;
+                case "Oculus": SetServicePage(new OculusPage()); break;
+                case "Settings": default: SetServicePage(new SettingsPage()); break;
             }
         }
 
@@ -45,6 +46,11 @@ namespace GameUploader
         private void SelectServiceButton_Steam_Click(object sender, RoutedEventArgs e)
         {
             SetServicePage(new SteamPage());
+        }
+
+        private void SelectServiceButton_Itch_Click(object sender, RoutedEventArgs e)
+        {
+            SetServicePage(new ItchPage());
         }
 
         private void SelectServiceButton_Settings_Click(object sender, RoutedEventArgs e)

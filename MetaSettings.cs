@@ -40,6 +40,7 @@ namespace GameUploader
 
         public bool CurrPageIsOculus { get { return CurrPage == "Oculus"; } }
         public bool CurrPageIsSteam { get { return CurrPage == "Steam"; } }
+        public bool CurrPageIsItch { get { return CurrPage == "Itch"; } }
         public bool CurrPageIsSettings { get { return CurrPage == "Settings"; } }
 
 

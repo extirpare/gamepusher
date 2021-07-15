@@ -109,6 +109,9 @@
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ItchPage.xaml.cs">
+      <DependentUpon>ItchPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MetaSettings.cs" />
     <Compile Include="SteamSettings.cs" />
     <Page Include="MainWindow.xaml">
@@ -136,6 +139,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItchPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -200,6 +207,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\twitter-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\itch-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
