@@ -19,16 +19,9 @@
 				</Border>
 				<Border BorderBrush="#44888888" Background="#11888888" BorderThickness="1" Padding="10,5" Margin="0,30,0,0">
 					<StackPanel Orientation="Vertical">
-						<TextBlock Style="{StaticResource BodyText}">GamePusher is free and open-source software.</TextBlock>
-						<TextBlock Style="{StaticResource BodyText}">You can get updates, or contribute to its development, at this link:</TextBlock>
-						<TextBlock><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/extirpare/gamepusher"><Image Source="./Images/github-logo.png" Margin="0,0,3,0" Width="11" Height="11"/><Run Text="GamePusher on GitHub"/></Hyperlink></TextBlock>
-						<TextBlock Style="{StaticResource BodyText}" Margin="0,15,0,0">The following people contribute to GamePusher development:</TextBlock>
-						<BulletDecorator>
-							<BulletDecorator.Bullet>
-								<Ellipse Height="5" Width="5" Fill="White" />
-							</BulletDecorator.Bullet>
-							<TextBlock Style="{StaticResource BodyText}" Margin="5,0,0,0">Ben Walker <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://twitter.com/walkerb"><Image Source="./Images/twitter-logo.png" Margin="0,0,3,0" Width="11" Height="11"/>Twitter</Hyperlink></TextBlock>
-						</BulletDecorator>
+						<TextBlock Style="{StaticResource BodyText}">You're missing login credentials from C:\Users\Ben\.config\itch\butler_creds</TextBlock>
+						<TextBlock Style="{StaticResource BodyText}">Press this button to sign in to itch and store your credentials:</TextBlock>
+						<TextBlock Style="{StaticResource BodyText}">PS C:\Butler> .\butler.exe push C:\Code\Apps\GameUploader\Installer\bin\Release walkerb/gamepusher:windows-release</TextBlock>
 					</StackPanel>
 				</Border>
 			</StackPanel>

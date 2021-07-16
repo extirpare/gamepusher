@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Width="520" 
     Height="430"
-    Title="Game Pusher" MinWidth="350" MinHeight="280">
+    Title="GamePusher" MinWidth="350" MinHeight="280">
 
     <DockPanel Background="#1C1E20">
 		<Border x:Name="ServiceSelectorBorder" DockPanel.Dock="Left" Width="120" BorderBrush="#6E5300" BorderThickness="2" Background="#1C6E5300">
