@@ -5,10 +5,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GameUploader"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="400"
+      d:DesignHeight="550" d:DesignWidth="400"
       Title="Itch.io">
 
 	<DockPanel x:Name="ContentRoot" Background="#1C1E20">
+		<Border x:Name="FinalSectionBorder" DockPanel.Dock="Bottom" BorderBrush="{Binding IsValid, Converter={StaticResource BoolToFGColorConverter}, UpdateSourceTrigger=PropertyChanged}" Background="{Binding IsValid, Converter={StaticResource BoolToBGColorConverter}}" BorderThickness="2,2,2,2" Height="80" Margin="0">
+			<StackPanel x:Name="FinalSectionRoot" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+				<TextBlock Text="{Binding ErrorStr}" Visibility="{Binding IsInvalid, Converter={StaticResource BoolToVisConverter}}" FontSize="12" Foreground="White" Margin="3" HorizontalAlignment="Center" FontWeight="Bold" />
+				<Button x:Name="UploadButton" Style="{StaticResource DarkButton}" IsEnabled="{Binding IsValid}" Opacity="{Binding IsValid, Converter={StaticResource BoolToOpacityConverter}}" Padding="6" Content="Upload Build" HorizontalAlignment="Center" Click="UploadButton_Click"/>
+			</StackPanel>
+		</Border>
 		<ScrollViewer x:Name="ContentRootScroll" DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
 			<StackPanel Orientation="Vertical" Margin="10,20">
 				<Border x:Name="TitlePanel" Background="#7F024ABE" CornerRadius="8" Padding="16,4,16,4" Margin="0,0,0,10">
@@ -17,14 +23,89 @@
 						<TextBlock><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://itch.io/docs/butler/" Foreground="#FF91E5BF">Documentation</Hyperlink></TextBlock>
 					</StackPanel>
 				</Border>
-				<Border BorderBrush="#44888888" Background="#11888888" BorderThickness="1" Padding="10,5" Margin="0,30,0,0">
+				<StackPanel x:Name="MetaSettingsPanel" Orientation="Vertical">
+					<StackPanel x:Name="PathToExePanel" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}">
+							Path to butler.exe
+							<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://itch.io/docs/butler/installing.html">[?]</Hyperlink>
+						</TextBlock>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="10"/>
+								<ColumnDefinition Width="80"/>
+							</Grid.ColumnDefinitions>
+							<TextBox Style="{StaticResource DarkTextBox}" x:Name="PathToExe_TextBox" Grid.Column="0" Text="{Binding PathToExe}"/>
+							<Button Style="{StaticResource DarkButton}" Content="Browse..." Grid.Column="2" Click="PathToExe_BrowseButton_Click"/>
+						</Grid>
+					</StackPanel>
+				</StackPanel>
+
+				<Border x:Name="LoginArea" BorderBrush="#44888888" Background="#11888888" BorderThickness="1" Padding="10,5" Margin="0,15,0,0">
 					<StackPanel Orientation="Vertical">
-						<TextBlock Style="{StaticResource BodyText}">You're missing login credentials from C:\Users\Ben\.config\itch\butler_creds</TextBlock>
-						<TextBlock Style="{StaticResource BodyText}">Press this button to sign in to itch and store your credentials:</TextBlock>
-						<TextBlock Style="{StaticResource BodyText}">PS C:\Butler> .\butler.exe push C:\Code\Apps\GameUploader\Installer\bin\Release walkerb/gamepusher:windows-release</TextBlock>
+						<TextBlock Style="{StaticResource BodyText}" x:Name="LoginHeader" Visibility="{Binding HasNoButlerCreds, Converter={StaticResource BoolToVisConverter}}">
+							We can't find login credentials for itch.io. 
+							Click the button below and authorize access to your account in order to upload builds.
+						</TextBlock>
+						<Button Style="{StaticResource DarkButton}" x:Name="LoginButton" Visibility="{Binding HasNoButlerCreds, Converter={StaticResource BoolToVisConverter}}" HorizontalAlignment="Center" Padding="20,3" Content="Login..." Click="LoginButton_Click"/>
+						<TextBlock Style="{StaticResource BodyText}" x:Name="LogoutHeader" Visibility="{Binding HasButlerCreds, Converter={StaticResource BoolToVisConverter}}">
+							We found login credentials for itch.io. 
+							If you don't like this, click the button below to log out 
+							(by erasing your saved API key, cutting off app access to your account).
+						</TextBlock>
+						<Button Style="{StaticResource DarkButton}" x:Name="LogoutButton" Visibility="{Binding HasButlerCreds, Converter={StaticResource BoolToVisConverter}}" HorizontalAlignment="Center" Padding="20,3" Content="Logout..." Click="LogoutButton_Click"/>
 					</StackPanel>
 				</Border>
+
+				<StackPanel x:Name="BuildSettingsPanel" Orientation="Vertical" Margin="0,10,0,0">
+					<StackPanel x:Name="BuildPathPanel" Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText_Tooltipped}" Text="To Upload">
+							<ToolTipService.ToolTip>
+								<ToolTip Content="This is what you want to upload. It can also be a .zip file."/>
+							</ToolTipService.ToolTip>
+						</TextBlock>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="10"/>
+								<ColumnDefinition Width="80"/>
+							</Grid.ColumnDefinitions>
+							<TextBox Style="{StaticResource DarkTextBox}" Grid.Column="0" Text="{Binding PathToUpload}"/>
+							<Button Style="{StaticResource DarkButton}" Content="Browse..." Grid.Column="2" Click="PathToUpload_BrowseButton_Click"/>
+						</Grid>
+					</StackPanel>
+					<StackPanel Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText_Tooltipped}" Text="Project Owner Username">
+							<ToolTipService.ToolTip>
+								<ToolTip>
+									If your project's URL is https://finji.itch.io/overland, 
+									the project owner's username is "finji".
+								</ToolTip>
+							</ToolTipService.ToolTip>
+						</TextBlock>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding ProjectUsername}"/>
+					</StackPanel>
+					<StackPanel Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText_Tooltipped}" Text="Project Name">
+							<ToolTipService.ToolTip>
+								<ToolTip>
+									If your project's URL is https://finji.itch.io/overland, 
+									the project name is "overland".
+								</ToolTip>
+							</ToolTipService.ToolTip>
+						</TextBlock>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding ProjectName}"/>
+					</StackPanel>
+					<StackPanel Orientation="Vertical">
+						<TextBlock Style="{StaticResource HeaderText}">
+							Channel Name
+							<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://itch.io/docs/butler/pushing.html#channel-names">[?]</Hyperlink>
+						</TextBlock>
+						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding ChannelName}"/>
+					</StackPanel>
+				</StackPanel>
 			</StackPanel>
 		</ScrollViewer>
 	</DockPanel>
 </Page>
+ 

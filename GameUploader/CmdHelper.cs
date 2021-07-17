@@ -56,7 +56,7 @@ public static class CmdHelper
         }
     }
 
-    public static void RunCmd(string cmd, bool isVisible = false)
+    public static void RunCmd(string cmd, bool isVisible = false, Action onExitAction = null)
     {
         Process p = new Process();
         p.StartInfo.UseShellExecute = true;
@@ -67,6 +67,12 @@ public static class CmdHelper
 
         p.StartInfo.FileName = "cmd.exe";
         p.StartInfo.Arguments = "/K " + cmd;
+
+        if (onExitAction != null)
+		{
+            p.EnableRaisingEvents = true;
+            p.Exited += new EventHandler((sender, e) => { onExitAction(); });
+        }
 
         p.Start();
     }

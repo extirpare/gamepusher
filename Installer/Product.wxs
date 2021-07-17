@@ -36,16 +36,16 @@
 		
 		<!-- Step 2: Define the files to install -->
 		<DirectoryRef Id="INSTALLFOLDER">
-			<Component Id="GamePusher.exe">
+			<Component Id="GamePusher.exe" Guid="*">
 				<File Source="$(var.GameUploader.TargetDir)GamePusher.exe" KeyPath="yes" />
 			</Component>
-			<Component Id="Microsoft.WindowsAPICodePack.dll">
+			<Component Id="Microsoft.WindowsAPICodePack.dll" Guid="*">
 				<File Source="$(var.GameUploader.TargetDir)Microsoft.WindowsAPICodePack.dll" KeyPath="yes" />
 			</Component>
-			<Component Id="Microsoft.WindowsAPICodePack.Shell.dll">
+			<Component Id="Microsoft.WindowsAPICodePack.Shell.dll" Guid="*">
 				<File Source="$(var.GameUploader.TargetDir)Microsoft.WindowsAPICodePack.Shell.dll" KeyPath="yes" />
 			</Component>
-			<Component Id="Microsoft.WindowsAPICodePack.ShellExtensions.dll">
+			<Component Id="Microsoft.WindowsAPICodePack.ShellExtensions.dll" Guid="*">
 				<File Source="$(var.GameUploader.TargetDir)Microsoft.WindowsAPICodePack.ShellExtensions.dll" KeyPath="yes" />
 			</Component>
 		</DirectoryRef>

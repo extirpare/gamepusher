@@ -8,6 +8,10 @@
 		<Setter Property="FontSize" Value="10"/>
 		<Setter Property="Margin" Value="2,2,0,0"/>
 	</Style>
+	
+	<Style TargetType="TextBlock" x:Key="HeaderText_Tooltipped" BasedOn="{StaticResource HeaderText}">
+		<Setter Property="Cursor" Value="Help"/>
+	</Style>
 
 	<Style TargetType="TextBlock" x:Key="BodyText">
 		<Setter Property="Foreground" Value="White"/>

@@ -102,6 +102,7 @@
     <Compile Include="CmdHelper.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="IServicePage.cs" />
+    <Compile Include="ItchSettings.cs" />
     <Compile Include="OculusPage.xaml.cs">
       <DependentUpon>OculusPage.xaml</DependentUpon>
     </Compile>
