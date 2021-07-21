@@ -54,6 +54,7 @@
 							(by erasing your saved API key, cutting off app access to your account).
 						</TextBlock>
 						<Button Style="{StaticResource DarkButton}" x:Name="LogoutButton" Visibility="{Binding HasButlerCreds, Converter={StaticResource BoolToVisConverter}}" HorizontalAlignment="Center" Padding="20,3" Content="Logout..." Click="LogoutButton_Click"/>
+						<Button Style="{StaticResource DarkButton}" HorizontalAlignment="Center" Padding="20,3" Content="LaunchTestCmd" Click="LaunchTestCmdButton_Click"/>
 					</StackPanel>
 				</Border>
 

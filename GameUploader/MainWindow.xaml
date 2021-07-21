@@ -39,6 +39,19 @@
 				</Button>
 			</StackPanel>
 		</Border>
-		<Frame x:Name="ServiceFrame" DockPanel.Dock="Top" Template="{StaticResource CleanFrame}"/>
+		<Grid>
+			<Frame x:Name="MainFrame" DockPanel.Dock="Top" Template="{StaticResource CleanFrame}"/>
+			<Border x:Name="ActionInProgressFrame" Background="#aa999999" Visibility="Hidden">
+				<StackPanel VerticalAlignment="Center" Margin="20">
+					<TextBlock FontWeight="Bold" FontSize="14">
+						A cmd prompt is running for you right now.<LineBreak/>
+						<Hyperlink RequestNavigate="ActionInProgress_SetFocus" NavigateUri="https://itch.io/docs/butler/pushing.html#channel-names">Focus on cmd prompt</Hyperlink>
+					</TextBlock>
+					<TextBlock FontWeight="Bold" FontSize="12">
+						<Hyperlink RequestNavigate="ActionInProgress_Kill" NavigateUri="https://itch.io/docs/butler/pushing.html#channel-names">Force kill cmd prompt</Hyperlink>
+					</TextBlock>
+				</StackPanel>
+			</Border>
+		</Grid>
     </DockPanel>
 </Window>

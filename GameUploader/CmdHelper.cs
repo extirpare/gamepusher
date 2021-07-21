@@ -56,14 +56,14 @@ public static class CmdHelper
         }
     }
 
-    public static void RunCmd(string cmd, bool isVisible = false, Action onExitAction = null)
+    public static Process RunCmd(string cmd, Action onExitAction = null)
     {
         Process p = new Process();
         p.StartInfo.UseShellExecute = true;
         p.StartInfo.RedirectStandardInput = false;
         p.StartInfo.RedirectStandardOutput = false;
-        p.StartInfo.CreateNoWindow = !isVisible;
-        p.StartInfo.WindowStyle = isVisible ? ProcessWindowStyle.Normal : ProcessWindowStyle.Hidden;
+        p.StartInfo.CreateNoWindow = false;
+        p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
 
         p.StartInfo.FileName = "cmd.exe";
         p.StartInfo.Arguments = "/K " + cmd;
@@ -75,5 +75,6 @@ public static class CmdHelper
         }
 
         p.Start();
+        return p;
     }
 }

@@ -19,6 +19,11 @@ namespace GameUploader
 			InitializeComponent();
 		}
 
+		public void SetParentWindow(MainWindow window)
+		{
+			//settings page don't care
+		}
+
 		public void OnEntered()
 		{
 			DataContext = MetaSettings.Instance;

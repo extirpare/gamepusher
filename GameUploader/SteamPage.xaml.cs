@@ -14,6 +14,7 @@ namespace GameUploader
 	{
 		public string ServiceName { get { return "Steam"; } }
         SteamSettings m_settings;
+		MainWindow m_parentWindow;
 
 		static string VDFPath
 		{ get {
@@ -23,6 +24,11 @@ namespace GameUploader
 		public SteamPage()
 		{
 			InitializeComponent();
+		}
+
+		public void SetParentWindow(MainWindow window)
+		{
+			m_parentWindow = window;
 		}
 
 		public void OnEntered()

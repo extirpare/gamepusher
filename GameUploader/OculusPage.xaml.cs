@@ -20,10 +20,16 @@ namespace GameUploader
 	{
 		public string ServiceName { get { return "Oculus"; } }
         OculusSettings m_settings;
+        MainWindow m_parentWindow;
 
         public OculusPage()
 		{
 			InitializeComponent();
+        }
+
+        public void SetParentWindow(MainWindow window)
+        {
+            m_parentWindow = window;
         }
 
         public void OnEntered()
@@ -109,7 +115,7 @@ namespace GameUploader
             if (m_settings.WantsReleaseNotes)
                 cmdStr.Append(" --notes \"" + m_settings.ReleaseNotes + '"');
 
-            CmdHelper.RunCmd(cmdStr.ToString(), true);
+            CmdHelper.RunCmd(cmdStr.ToString());
         }
 
         private void ToggleWantsAssetsDir_Click(object sender, RoutedEventArgs e) { m_settings.WantsAssetsDir = !m_settings.WantsAssetsDir; }

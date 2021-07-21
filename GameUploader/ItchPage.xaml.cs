@@ -15,10 +15,16 @@ namespace GameUploader
 	{
 		public string ServiceName { get { return "Itch"; } }
 		ItchSettings m_settings;
+		MainWindow m_parentWindow;
 
 		public ItchPage()
 		{
 			InitializeComponent();
+		}
+
+		public void SetParentWindow(MainWindow window)
+		{
+			m_parentWindow = window;
 		}
 
 		public void OnEntered()
@@ -64,12 +70,17 @@ namespace GameUploader
 
 		private void LoginButton_Click(object sender, RoutedEventArgs e)
 		{
-			CmdHelper.RunCmd(m_settings.PathToExe + " login", true, () => PushPropertyChanges());
+			CmdHelper.RunCmd(m_settings.PathToExe + " login", () => PushPropertyChanges());
 		}
 
 		private void LogoutButton_Click(object sender, RoutedEventArgs e)
 		{
-			CmdHelper.RunCmd(m_settings.PathToExe + " logout --assume-yes", true, () => PushPropertyChanges());
+			CmdHelper.RunCmd(m_settings.PathToExe + " logout --assume-yes", () => PushPropertyChanges());
+		}
+
+		private void LaunchTestCmdButton_Click(object sender, RoutedEventArgs e)
+		{
+			m_parentWindow.RunBlockingCmd("echo whatsup homie", () => PushPropertyChanges());
 		}
 
 		private void UploadButton_Click(object sender, RoutedEventArgs e)
@@ -82,7 +93,7 @@ namespace GameUploader
 			cmdStr.Append(m_settings.PathToUpload);
 			cmdStr.Append($"  {m_settings.ProjectUsername}/{m_settings.ProjectName}:{m_settings.ChannelName}");
 
-			CmdHelper.RunCmd(cmdStr.ToString(), true);
+			CmdHelper.RunCmd(cmdStr.ToString());
 		}
 
 		private void PushPropertyChanges()

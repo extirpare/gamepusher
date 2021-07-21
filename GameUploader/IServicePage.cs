@@ -8,6 +8,7 @@ namespace GameUploader
 {
 	interface IServicePage
 	{
+		void SetParentWindow(MainWindow window);
 		string ServiceName { get; }
 		void OnEntered();
 		void OnExited();
