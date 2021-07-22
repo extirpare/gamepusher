@@ -25,9 +25,14 @@
 				</Border>
 				<StackPanel x:Name="MetaSettingsPanel" Orientation="Vertical">
 					<StackPanel x:Name="PathToExePanel" Orientation="Vertical">
-						<TextBlock Style="{StaticResource HeaderText}" Text="Path to steamcmd.exe">
+						<TextBlock Style="{StaticResource HeaderText}">
+							Path to steamcmd.exe
+							<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://developer.valvesoftware.com/wiki/SteamCMD#Downloading_SteamCMD">[?]</Hyperlink>
 							<ToolTipService.ToolTip>
-								<ToolTip Content="This file is part of the Steamworks API. You can find it in the ContentBuilder/builder folder."/>
+								<ToolTip><TextBlock>
+									This file is part of the Steamworks API.<LineBreak/>
+									You can find it in the ContentBuilder/builder folder.
+								</TextBlock></ToolTip>
 							</ToolTipService.ToolTip>
 						</TextBlock>
 						<Grid>
@@ -45,7 +50,10 @@
 					<StackPanel x:Name="AppIDPanel" Orientation="Vertical">
 						<TextBlock Style="{StaticResource HeaderText}" Text="App ID">
 							<ToolTipService.ToolTip>
-								<ToolTip Content="The AppID of the game on Steam. Your account must have privileges to modify this app."/>
+								<ToolTip><TextBlock>
+									The URL for your game's Steam store page is store.steampowered.com/app/[APPID]<LineBreak/>
+									Your account must have privileges to modify this app.
+								</TextBlock></ToolTip>
 							</ToolTipService.ToolTip>
 						</TextBlock>
 						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AppID}"/>
@@ -53,7 +61,7 @@
 					<StackPanel x:Name="AccountNamePanel" Orientation="Vertical">
 						<TextBlock Style="{StaticResource HeaderText}" Text="Account Name">
 							<ToolTipService.ToolTip>
-								<ToolTip Content="The name of the account that has privileges to modify this app."/>
+								<ToolTip Content="Username of the account that has privileges to modify this app."/>
 							</ToolTipService.ToolTip>
 						</TextBlock>
 						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AccountName}"/>
@@ -61,12 +69,9 @@
 					<StackPanel x:Name="AccountPasswordPanel" Orientation="Vertical">
 						<TextBlock Style="{StaticResource HeaderText}" Text="Account Password">
 							<ToolTipService.ToolTip>
-								<ToolTip>
-									<TextBlock>
-										The password of the account that has privileges to modify this app.<LineBreak/>
-										 If you're security-minded, un-check the 'Save Passwords' toggle in Settings to avoid saving this.
-										</TextBlock>
-									</ToolTip>
+								<ToolTip><TextBlock>
+									Password of the account that has privileges to modify this app.
+								</TextBlock></ToolTip>
 							</ToolTipService.ToolTip>
 						</TextBlock>
 						<TextBox x:Name="PasswordText_Hidden" Style="{StaticResource DarkTextBox}" Text="{Binding AccountPassword}" FontFamily="./Resources/password.ttf #Password" />
@@ -81,15 +86,39 @@
 				</StackPanel>
 				<StackPanel x:Name="ThisBuildPanel" Orientation="Vertical" Margin="0,20,0,0">
 					<StackPanel x:Name="BuildDescription" Orientation="Vertical">
-						<TextBlock Style="{StaticResource HeaderText}" Text="Build Description"/>
+						<TextBlock Style="{StaticResource HeaderText}">
+							Build Description
+							<ToolTipService.ToolTip>
+								<ToolTip><TextBlock>
+									This description is only displayed internally,<LineBreak/>
+									in your game's Builds list.
+								</TextBlock></ToolTip>
+							</ToolTipService.ToolTip>
+						</TextBlock>
 						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding BuildDescription}"/>
 					</StackPanel>
 					<StackPanel x:Name="DepotID" Orientation="Vertical">
-						<TextBlock Style="{StaticResource HeaderText}" Text="Depot ID"/>
+						<TextBlock Style="{StaticResource HeaderText}">
+							Depot ID
+							<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://partner.steamgames.com/doc/store/application/depots">[?]</Hyperlink>
+							<ToolTipService.ToolTip>
+								<ToolTip><TextBlock>
+									Depots contain different versions of your game, i.e. for<LineBreak/>
+									different OSes or regions.<LineBreak/>
+									If you aren't sure, your depot ID is probably your AppID.
+								</TextBlock></ToolTip>
+							</ToolTipService.ToolTip>
+						</TextBlock>
 						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding DepotID}"/>
 					</StackPanel>
 					<StackPanel x:Name="BuildPath" Orientation="Vertical">
-						<TextBlock Style="{StaticResource HeaderText}" Text="Build Path"/>
+						<TextBlock Style="{StaticResource HeaderText}" Text="Build Path">
+							<ToolTipService.ToolTip>
+								<ToolTip><TextBlock>
+									The folder containing the files you want to upload to Steam.
+								</TextBlock></ToolTip>
+							</ToolTipService.ToolTip>
+						</TextBlock>
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*"/>

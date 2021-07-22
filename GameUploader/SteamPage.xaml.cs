@@ -101,7 +101,7 @@ namespace GameUploader
 			cmdStr.Append($" +run_app_build {VDFPath}");
 			cmdStr.Append($" +quit");
 
-			CmdHelper.RunCmd(cmdStr.ToString(), true);
+			m_parentWindow.RunBlockingCmd(cmdStr.ToString(), true);
 			*/
 		}
 

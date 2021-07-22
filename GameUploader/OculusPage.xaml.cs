@@ -115,7 +115,7 @@ namespace GameUploader
             if (m_settings.WantsReleaseNotes)
                 cmdStr.Append(" --notes \"" + m_settings.ReleaseNotes + '"');
 
-            CmdHelper.RunCmd(cmdStr.ToString());
+            m_parentWindow.RunBlockingCmd(cmdStr.ToString());
         }
 
         private void ToggleWantsAssetsDir_Click(object sender, RoutedEventArgs e) { m_settings.WantsAssetsDir = !m_settings.WantsAssetsDir; }

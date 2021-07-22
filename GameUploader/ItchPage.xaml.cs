@@ -70,12 +70,12 @@ namespace GameUploader
 
 		private void LoginButton_Click(object sender, RoutedEventArgs e)
 		{
-			CmdHelper.RunCmd(m_settings.PathToExe + " login", () => PushPropertyChanges());
+			m_parentWindow.RunBlockingCmd(m_settings.PathToExe + " login", () => PushPropertyChanges());
 		}
 
 		private void LogoutButton_Click(object sender, RoutedEventArgs e)
 		{
-			CmdHelper.RunCmd(m_settings.PathToExe + " logout --assume-yes", () => PushPropertyChanges());
+			m_parentWindow.RunBlockingCmd(m_settings.PathToExe + " logout --assume-yes", () => PushPropertyChanges());
 		}
 
 		private void LaunchTestCmdButton_Click(object sender, RoutedEventArgs e)
@@ -93,7 +93,7 @@ namespace GameUploader
 			cmdStr.Append(m_settings.PathToUpload);
 			cmdStr.Append($"  {m_settings.ProjectUsername}/{m_settings.ProjectName}:{m_settings.ChannelName}");
 
-			CmdHelper.RunCmd(cmdStr.ToString());
+			m_parentWindow.RunBlockingCmd(cmdStr.ToString());
 		}
 
 		private void PushPropertyChanges()

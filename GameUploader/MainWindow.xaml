@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Width="520" 
     Height="430"
-    Title="GamePusher" MinWidth="350" MinHeight="280">
+    Title="GamePusher" MinWidth="400" MinHeight="320">
 
     <DockPanel Background="#1C1E20">
 		<Border x:Name="ServiceSelectorBorder" DockPanel.Dock="Left" Width="120" BorderBrush="#6E5300" BorderThickness="2" Background="#1C6E5300">
@@ -41,11 +41,19 @@
 		</Border>
 		<Grid>
 			<Frame x:Name="MainFrame" DockPanel.Dock="Top" Template="{StaticResource CleanFrame}"/>
-			<Border x:Name="ActionInProgressFrame" Background="#aa999999" Visibility="Hidden">
+			<Border x:Name="ActionInProgressFrame" Background="#CC14274C" Visibility="Hidden">
 				<StackPanel VerticalAlignment="Center" Margin="20">
-					<TextBlock FontWeight="Bold" FontSize="14">
-						A cmd prompt is running for you right now.<LineBreak/>
-						<Hyperlink RequestNavigate="ActionInProgress_SetFocus" NavigateUri="https://itch.io/docs/butler/pushing.html#channel-names">Focus on cmd prompt</Hyperlink>
+					<TextBlock FontWeight="Bold" FontSize="14" TextWrapping="Wrap" Foreground="White">
+						GamePusher is currently running a cmd prompt.
+					</TextBlock>
+					<TextBlock FontWeight="Bold" FontSize="14" TextWrapping="Wrap" Foreground="White" Padding="0,10,0,0">
+					Close the cmd prompt to continue using GamePusher.
+					</TextBlock>
+					<TextBlock FontWeight="Bold" FontSize="12" TextWrapping="Wrap" Padding="0,10,0,0" Foreground="#BBFFFFFF">
+						If it's just sitting waiting for input, it's extremely safe to close.
+					</TextBlock>
+					<TextBlock FontWeight="Bold" FontSize="14" TextWrapping="Wrap" Padding="0,20,0,0">
+					<Hyperlink RequestNavigate="ActionInProgress_SetFocus" NavigateUri="https://itch.io/docs/butler/pushing.html#channel-names">Focus on cmd prompt</Hyperlink>
 					</TextBlock>
 					<TextBlock FontWeight="Bold" FontSize="12">
 						<Hyperlink RequestNavigate="ActionInProgress_Kill" NavigateUri="https://itch.io/docs/butler/pushing.html#channel-names">Force kill cmd prompt</Hyperlink>
