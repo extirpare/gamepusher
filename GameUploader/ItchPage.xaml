@@ -43,18 +43,18 @@
 
 				<Border x:Name="LoginArea" BorderBrush="#44888888" Background="#11888888" BorderThickness="1" Padding="10,5" Margin="0,15,0,0">
 					<StackPanel Orientation="Vertical">
-						<TextBlock Style="{StaticResource BodyText}" x:Name="LoginHeader" Visibility="{Binding HasNoButlerCreds, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource BodyText}" x:Name="LoginHeader" Visibility="{Binding HasNoButlerCreds, Converter={StaticResource BoolToVisConverter}}" FontSize="10">
 							We can't find login credentials for itch.io. 
 							Click the button below and authorize access to your account in order to upload builds.
 						</TextBlock>
 						<Button Style="{StaticResource DarkButton}" x:Name="LoginButton" Visibility="{Binding HasNoButlerCreds, Converter={StaticResource BoolToVisConverter}}" HorizontalAlignment="Center" Padding="20,3" Content="Login..." Click="LoginButton_Click"/>
-						<TextBlock Style="{StaticResource BodyText}" x:Name="LogoutHeader" Visibility="{Binding HasButlerCreds, Converter={StaticResource BoolToVisConverter}}">
+						<TextBlock Style="{StaticResource BodyText}" x:Name="LogoutHeader" Visibility="{Binding HasButlerCreds, Converter={StaticResource BoolToVisConverter}}" FontSize="10">
 							We found login credentials for itch.io. 
 							If you don't like this, click the button below to log out 
 							(by erasing your saved API key, cutting off app access to your account).
 						</TextBlock>
 						<Button Style="{StaticResource DarkButton}" x:Name="LogoutButton" Visibility="{Binding HasButlerCreds, Converter={StaticResource BoolToVisConverter}}" HorizontalAlignment="Center" Padding="20,3" Content="Logout..." Click="LogoutButton_Click"/>
-						<Button Style="{StaticResource DarkButton}" HorizontalAlignment="Center" Padding="20,3" Content="LaunchTestCmd" Click="LaunchTestCmdButton_Click"/>
+						<!-- <Button Style="{StaticResource DarkButton}" HorizontalAlignment="Center" Padding="20,3" Content="LaunchTestCmd" Click="LaunchTestCmdButton_Click"/>-->
 					</StackPanel>
 				</Border>
 
