@@ -52,16 +52,62 @@ namespace GameUploader
             set { m_channelName = value; PushPropertyChanges(); }
         }
 
+
+        //
+        // OPTIONAL SETTINGS READ/WRITE + WANTED
+        //
+
+        private bool m_wantsOverrideVersionNum;
+        private string m_overrideVersionNum = "";
+        public bool WantsOverrideVersionNum
+        {
+            get { return m_wantsOverrideVersionNum; }
+            set { m_wantsOverrideVersionNum = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null)); }
+        }
+        public string OverrideVersionNum
+        {
+            get { return m_overrideVersionNum; }
+            set { m_overrideVersionNum = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null)); }
+        }
+
+        private bool m_wantsIgnorePattern;
+        private string m_ignorePattern = "";
+        public bool WantsIgnorePattern
+        {
+            get { return m_wantsIgnorePattern; }
+            set { m_wantsIgnorePattern = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null)); }
+        }
+        public string IgnorePattern
+        {
+            get { return m_ignorePattern; }
+            set { m_ignorePattern = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null)); }
+        }
+
         //
         // READ-ONLY SETTINGS
         //
 
         public bool HasButlerCreds { get { return File.Exists(ButlerCredsPath); } }
         public bool HasNoButlerCreds { get { return !HasButlerCreds; } }
+        public string ErrorStr { get { return Err2Str(CalcError()); } }
 
         public bool IsValid { get { return CalcError() == eErrorCode.Success; } }
         public bool IsInvalid { get { return !IsValid; } }
+        public bool ShowCopyCommandButton { get { return IsValid && MetaSettings.Instance.ShowCopyCommandButton; } }
 
+        public string OptionalSettingsCountStr
+        {
+            get
+            {
+                int count = 0;
+                if (WantsOverrideVersionNum) ++count;
+                if (WantsIgnorePattern) ++count;
+                if (count == 1)
+                    return "1 Optional Setting Applied";
+                else
+                    return count.ToString() + " Optional Settings Applied";
+            }
+        }
 
         //
         // EVERYTHING ELSE

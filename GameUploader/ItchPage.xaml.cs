@@ -78,23 +78,49 @@ namespace GameUploader
 			m_parentWindow.RunBlockingCmd(m_settings.PathToExe + " logout --assume-yes", () => PushPropertyChanges());
 		}
 
-		private void LaunchTestCmdButton_Click(object sender, RoutedEventArgs e)
-		{
-			m_parentWindow.RunBlockingCmd("echo whatsup homie", () => PushPropertyChanges());
-		}
-
 		private void UploadButton_Click(object sender, RoutedEventArgs e)
 		{
 			m_settings.Save();
+			m_parentWindow.RunBlockingCmd(GenerateCommand());
+		}
 
+		private void CopyCommandButton_Click(object sender, RoutedEventArgs e)
+		{
+			Clipboard.SetText(GenerateCommand());
+		}
+
+		private string GenerateCommand()
+		{
 			var cmdStr = new StringBuilder();
-			cmdStr.Append(m_settings.PathToExe);
+			cmdStr.Append('"' + m_settings.PathToExe + '"');
 			cmdStr.Append(" push ");
-			cmdStr.Append(m_settings.PathToUpload);
+			cmdStr.Append('"' + m_settings.PathToUpload + '"');
 			cmdStr.Append($"  {m_settings.ProjectUsername}/{m_settings.ProjectName}:{m_settings.ChannelName}");
 
-			m_parentWindow.RunBlockingCmd(cmdStr.ToString());
+			if (m_settings.WantsOverrideVersionNum)
+				cmdStr.Append(" --userversion \"" + m_settings.OverrideVersionNum + '"');
+
+			if (m_settings.WantsIgnorePattern)
+			{
+				var ignorePatternSubstrs = m_settings.IgnorePattern.Split(',');
+				foreach (var substr in ignorePatternSubstrs)
+					cmdStr.Append(" --ignore \"" + substr.Trim() + '"');
+			}
+
+			return cmdStr.ToString();
 		}
+		
+		private void OptionalSettingsDropdownButton_Click(object sender, RoutedEventArgs e)
+		{
+			//credit to https://social.msdn.microsoft.com/Forums/vstudio/en-US/633b9bb0-c3cb-4ab2-aff3-df48065a14f4/how-to-make-a-drop-down-menu-in-wpf?forum=wpf
+			(sender as Button).ContextMenu.IsEnabled = true;
+			(sender as Button).ContextMenu.PlacementTarget = (sender as Button);
+			(sender as Button).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+			(sender as Button).ContextMenu.IsOpen = true;
+		}
+
+		private void ToggleWantsOverrideVersionNum_Click(object sender, RoutedEventArgs e) { m_settings.WantsOverrideVersionNum = !m_settings.WantsOverrideVersionNum; }
+		private void ToggleWantsIgnorePattern_Click(object sender, RoutedEventArgs e) { m_settings.WantsIgnorePattern = !m_settings.WantsIgnorePattern; }
 
 		private void PushPropertyChanges()
 		{

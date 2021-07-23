@@ -75,11 +75,11 @@
 							</ToolTipService.ToolTip>
 						</TextBlock>
 						<TextBox x:Name="PasswordText_Hidden" Style="{StaticResource DarkTextBox}" Text="{Binding AccountPassword}" FontFamily="./Resources/password.ttf #Password" />
-						<Button x:Name="PasswordButton_Hidden" Style="{StaticResource DarkButton}" Click="PasswordButton_Hidden_Click" Width="20" Height="13" HorizontalAlignment="Right" Margin="0,-15,3,0" Panel.ZIndex="1">
+						<Button x:Name="PasswordButton_Hidden" Style="{StaticResource ShowPasswordButton}" Click="PasswordButton_Hidden_Click">
 							<Image Source="Images/eye.png"/>
 						</Button>
 						<TextBox x:Name="PasswordText_Revealed" Visibility="Collapsed" Style="{StaticResource DarkTextBox}" Text="{Binding AccountPassword}" />
-						<Button x:Name="PasswordButton_Revealed" Visibility="Collapsed" Style="{StaticResource DarkButton_On}" Click="PasswordButton_Revealed_Click" Width="20" Height="13" HorizontalAlignment="Right" Margin="0,-15,3,0" Panel.ZIndex="1">
+						<Button x:Name="PasswordButton_Revealed" Visibility="Collapsed" Style="{StaticResource ShowPasswordButton_On}" Click="PasswordButton_Revealed_Click">
 							<Image Source="Images/eye.png"/>
 						</Button>
 					</StackPanel>

@@ -189,7 +189,8 @@ namespace GameUploader
         public bool IsValid { get { return CalcError() == eErrorCode.Success; } }
         public bool IsInvalid { get { return !IsValid; } }
         public string ErrorStr { get { return Err2Str(CalcError()); } }
-        
+        public bool ShowCopyCommandButton { get { return IsValid && MetaSettings.Instance.ShowCopyCommandButton; } }
+
         public string OptionalSettingsCountStr
         { get {
                 int count = 0;
@@ -214,12 +215,23 @@ namespace GameUploader
         
         public void Save()
         {
+            string userTokenCopy = m_userToken;
+            string appSecretCopy = m_appSecret;
+            if (!MetaSettings.Instance.SavePasswords)
+			{
+                m_userToken = "";
+                m_appSecret = "";
+            }
+
             Directory.CreateDirectory(Path.GetDirectoryName(SavePath));
             using (StreamWriter sw = File.CreateText(SavePath))
             {
                 XmlSerializer xmls = new XmlSerializer(typeof(OculusSettings));
                 xmls.Serialize(sw, this);
             }
+
+            m_userToken = userTokenCopy;
+            m_appSecret = appSecretCopy;
         }
 
         public static OculusSettings Load()

@@ -17,7 +17,26 @@
 					</StackPanel>
 				</Border>
 				<StackPanel HorizontalAlignment="Center">
-					<CheckBox Content="Save Passwords?" IsChecked="{Binding SavePasswords}" Checked="SavePasswordsBox_Checked" Unchecked="SavePasswordsBox_Unchecked"/>
+					<CheckBox Content="Save Passwords &amp; Secrets?" IsChecked="{Binding SavePasswords}" Checked="SavePasswordsBox_Checked" Unchecked="SavePasswordsBox_Unchecked">
+						<ToolTipService.ToolTip>
+							<ToolTip><TextBlock>
+								If checked, GamePusher will save any entered Steam Password, <LineBreak/>
+								Oculus User Token, and Oculus App Secret.
+							</TextBlock></ToolTip>
+						</ToolTipService.ToolTip>
+					</CheckBox>
+					<Separator Margin="3" Background="Transparent"/>
+					<CheckBox Content="Show 'Copy command' button?" IsChecked="{Binding ShowCopyCommandButton}" Checked="ShowCopyCommandButtonBox_Checked" Unchecked="ShowCopyCommandButtonBox_Unchecked">
+						<ToolTipService.ToolTip>
+							<ToolTip><TextBlock>
+								Copies the command to clipboard, so you can <LineBreak/>
+								paste it in to a cmd prompt yourself.
+							</TextBlock></ToolTip>
+						</ToolTipService.ToolTip>
+					</CheckBox>
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Center" Margin="0,20,0,0">
+						<Button Style="{StaticResource DarkButton}" HorizontalAlignment="Center" Padding="20,3" Content="Open Saved Data Folder" Click="ShowSavedDataButton_Click"/>
 				</StackPanel>
 				<Border BorderBrush="#44888888" Background="#11888888" BorderThickness="1" Padding="10,5" Margin="0,30,0,0">
 					<StackPanel Orientation="Vertical">

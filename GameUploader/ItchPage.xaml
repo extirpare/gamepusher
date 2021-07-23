@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GameUploader"
       mc:Ignorable="d" 
-      d:DesignHeight="550" d:DesignWidth="400"
+      d:DesignHeight="650" d:DesignWidth="400"
       Title="Itch.io">
 
 	<DockPanel x:Name="ContentRoot" Background="#1C1E20">
@@ -13,6 +13,9 @@
 			<StackPanel x:Name="FinalSectionRoot" VerticalAlignment="Center" HorizontalAlignment="Stretch">
 				<TextBlock Text="{Binding ErrorStr}" Visibility="{Binding IsInvalid, Converter={StaticResource BoolToVisConverter}}" FontSize="12" Foreground="White" Margin="3" HorizontalAlignment="Center" FontWeight="Bold" />
 				<Button x:Name="UploadButton" Style="{StaticResource DarkButton}" IsEnabled="{Binding IsValid}" Opacity="{Binding IsValid, Converter={StaticResource BoolToOpacityConverter}}" Padding="6" Content="Upload Build" HorizontalAlignment="Center" Click="UploadButton_Click"/>
+				<TextBlock HorizontalAlignment="Center" Visibility="{Binding ShowCopyCommandButton, Converter={StaticResource BoolToVisConverter}}">
+					<Hyperlink Click="CopyCommandButton_Click">Copy Command</Hyperlink>
+				</TextBlock>
 			</StackPanel>
 		</Border>
 		<ScrollViewer x:Name="ContentRootScroll" DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
@@ -25,9 +28,15 @@
 				</Border>
 				<StackPanel x:Name="MetaSettingsPanel" Orientation="Vertical">
 					<StackPanel x:Name="PathToExePanel" Orientation="Vertical">
-						<TextBlock Style="{StaticResource HeaderText}">
+						<TextBlock Style="{StaticResource HeaderText_Tooltipped}">
 							Path to butler.exe
 							<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://itch.io/docs/butler/installing.html">[?]</Hyperlink>
+							<ToolTipService.ToolTip>
+								<ToolTip><TextBlock>
+									butler.exe is the itch.io-provided command-line tool<LineBreak/>
+									that GamePusher uses to upload your app to itch.
+								</TextBlock></ToolTip>
+							</ToolTipService.ToolTip>
 						</TextBlock>
 						<Grid>
 							<Grid.ColumnDefinitions>
@@ -41,16 +50,16 @@
 					</StackPanel>
 				</StackPanel>
 
-				<Border x:Name="LoginArea" BorderBrush="#44888888" Background="#11888888" BorderThickness="1" Padding="10,5" Margin="0,15,0,0">
+				<Border x:Name="LoginArea" BorderBrush="#44888888" Background="#11888888" BorderThickness="1" Padding="10,5" Margin="5,15,5,0">
 					<StackPanel Orientation="Vertical">
 						<TextBlock Style="{StaticResource BodyText}" x:Name="LoginHeader" Visibility="{Binding HasNoButlerCreds, Converter={StaticResource BoolToVisConverter}}" FontSize="10">
-							We can't find login credentials for itch.io. 
-							Click the button below and authorize access to your account in order to upload builds.
+							We can't find login credentials for itch.io.<LineBreak/>
+							To upload builds, click the button below and authorize access to your account.
 						</TextBlock>
 						<Button Style="{StaticResource DarkButton}" x:Name="LoginButton" Visibility="{Binding HasNoButlerCreds, Converter={StaticResource BoolToVisConverter}}" HorizontalAlignment="Center" Padding="20,3" Content="Login..." Click="LoginButton_Click"/>
 						<TextBlock Style="{StaticResource BodyText}" x:Name="LogoutHeader" Visibility="{Binding HasButlerCreds, Converter={StaticResource BoolToVisConverter}}" FontSize="10">
-							We found login credentials for itch.io. 
-							If you don't like this, click the button below to log out 
+							We found login credentials for itch.io.<LineBreak/>
+							If desired, click the button below to log out 
 							(by erasing your saved API key, cutting off app access to your account).
 						</TextBlock>
 						<Button Style="{StaticResource DarkButton}" x:Name="LogoutButton" Visibility="{Binding HasButlerCreds, Converter={StaticResource BoolToVisConverter}}" HorizontalAlignment="Center" Padding="20,3" Content="Logout..." Click="LogoutButton_Click"/>
@@ -103,6 +112,54 @@
 							<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://itch.io/docs/butler/pushing.html#channel-names">[?]</Hyperlink>
 						</TextBlock>
 						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding ChannelName}"/>
+
+						<StackPanel x:Name="OptionalSettingsPanel" Orientation="Vertical" Margin="0,20,0,0">
+							<TextBlock Style="{StaticResource HeaderText}" Text="Optional Settings"/>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="40"/>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="40"/>
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="20"/>
+								</Grid.RowDefinitions>
+								<Button Grid.Column="1" Grid.Row="0" Style="{StaticResource DarkButton}" Content="{Binding OptionalSettingsCountStr}" Click="OptionalSettingsDropdownButton_Click">
+									<Button.ContextMenu>
+										<ContextMenu>
+											<MenuItem IsChecked="{Binding WantsOverrideVersionNum}" Header="Override Version Number?" Click="ToggleWantsOverrideVersionNum_Click"/>
+											<MenuItem IsChecked="{Binding WantsIgnorePattern}" Header="Ignore Specific Files?" Click="ToggleWantsIgnorePattern_Click"/>
+										</ContextMenu>
+									</Button.ContextMenu>
+								</Button>
+							</Grid>
+						</StackPanel>
+						<StackPanel Orientation="Vertical" Visibility="{Binding WantsOverrideVersionNum, Converter={StaticResource BoolToVisConverter}}">
+							<TextBlock Style="{StaticResource HeaderText_Tooltipped}">
+								Override Version Number
+								<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://itch.io/docs/butler/pushing.html#specifying-your-own-version-number">[?]</Hyperlink>
+								<ToolTipService.ToolTip>
+									<ToolTip><TextBlock>
+										itch.io automatically assigns an ever-incrementing<LineBreak/>
+										version number, but you can replace it here if needed.
+									</TextBlock></ToolTip>
+								</ToolTipService.ToolTip>
+							</TextBlock>
+							<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding OverrideVersion}"/>
+						</StackPanel>
+						<StackPanel Orientation="Vertical" Visibility="{Binding WantsIgnorePattern, Converter={StaticResource BoolToVisConverter}}">
+							<TextBlock Style="{StaticResource HeaderText_Tooltipped}">
+								Ignore Pattern
+								<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://itch.io/docs/butler/pushing.html#appendix-c-ignoring-files">[?]</Hyperlink>
+								<ToolTipService.ToolTip>
+									<ToolTip><TextBlock>
+										Patterns are comma-separated. Ex: <LineBreak/>
+										*.pdb, *.manifest
+									</TextBlock></ToolTip>
+								</ToolTipService.ToolTip>
+							</TextBlock>
+							<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding IgnorePattern}"/>
+						</StackPanel>
 					</StackPanel>
 				</StackPanel>
 			</StackPanel>

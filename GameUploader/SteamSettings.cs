@@ -72,6 +72,7 @@ namespace GameUploader
         public bool IsValid { get { return CalcError() == eErrorCode.Success; } }
         public bool IsInvalid { get { return !IsValid; } }
         public string ErrorStr { get { return Err2Str(CalcError()); } }
+        public bool ShowCopyCommandButton { get { return IsValid && MetaSettings.Instance.ShowCopyCommandButton; } }
 
 
         //

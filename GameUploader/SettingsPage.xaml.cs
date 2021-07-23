@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Diagnostics;
 
 namespace GameUploader
 {
@@ -48,6 +49,21 @@ namespace GameUploader
 		private void SavePasswordsBox_Unchecked(object sender, RoutedEventArgs e)
 		{
 			MetaSettings.Instance.SavePasswords = false;
+		}
+
+		private void ShowCopyCommandButtonBox_Checked(object sender, RoutedEventArgs e)
+		{
+			MetaSettings.Instance.ShowCopyCommandButton = true;
+		}
+
+		private void ShowCopyCommandButtonBox_Unchecked(object sender, RoutedEventArgs e)
+		{
+			MetaSettings.Instance.ShowCopyCommandButton = false;
+		}
+
+		private void ShowSavedDataButton_Click(object sender, RoutedEventArgs e)
+		{
+			Process.Start("explorer.exe", MetaSettings.ParentFolderPath);
 		}
 	}
 }

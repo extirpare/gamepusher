@@ -34,6 +34,13 @@ namespace GameUploader
             set { m_savePasswords = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null)); }
         }
 
+        private bool m_showCopyCommandButton = false;
+        public bool ShowCopyCommandButton
+        {
+            get { return m_showCopyCommandButton; }
+            set { m_showCopyCommandButton = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null)); }
+        }
+
         //
         // READ-ONLY SETTINGS
         //

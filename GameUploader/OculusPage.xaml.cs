@@ -49,6 +49,38 @@ namespace GameUploader
             e.Handled = true;
         }
 
+        private void UserTokenButton_Hidden_Click(object sender, RoutedEventArgs e)
+        {
+            UserTokenButton_Hidden.Visibility = Visibility.Collapsed;
+            UserTokenText_Hidden.Visibility = Visibility.Collapsed;
+            UserTokenButton_Revealed.Visibility = Visibility.Visible;
+            UserTokenText_Revealed.Visibility = Visibility.Visible;
+        }
+
+        private void UserTokenButton_Revealed_Click(object sender, RoutedEventArgs e)
+        {
+            UserTokenButton_Hidden.Visibility = Visibility.Visible;
+            UserTokenText_Hidden.Visibility = Visibility.Visible;
+            UserTokenButton_Revealed.Visibility = Visibility.Collapsed;
+            UserTokenText_Revealed.Visibility = Visibility.Collapsed;
+        }
+
+        private void AppSecretButton_Hidden_Click(object sender, RoutedEventArgs e)
+        {
+            AppSecretButton_Hidden.Visibility = Visibility.Collapsed;
+            AppSecretText_Hidden.Visibility = Visibility.Collapsed;
+            AppSecretButton_Revealed.Visibility = Visibility.Visible;
+            AppSecretText_Revealed.Visibility = Visibility.Visible;
+        }
+
+        private void AppSecretButton_Revealed_Click(object sender, RoutedEventArgs e)
+        {
+            AppSecretButton_Hidden.Visibility = Visibility.Visible;
+            AppSecretText_Hidden.Visibility = Visibility.Visible;
+            AppSecretButton_Revealed.Visibility = Visibility.Collapsed;
+            AppSecretText_Revealed.Visibility = Visibility.Collapsed;
+        }
+
         private void PathToOculusExe_BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GameUploader"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="500"
+      d:DesignHeight="750" d:DesignWidth="500"
       Title="Oculus">
 
 	<Page.Resources>
@@ -66,11 +66,25 @@
 					</StackPanel>
 					<StackPanel x:Name="CredentialsPanel_UserToken" Orientation="Vertical" Visibility="{Binding CredentialsSourceIsUserToken, Converter={StaticResource BoolToVisConverter}}">
 						<TextBlock Style="{StaticResource HeaderText}" Text="User Token" />
-						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding UserToken}"/>
+						<TextBox x:Name="UserTokenText_Hidden" Style="{StaticResource DarkTextBox}" Text="{Binding UserToken}" FontFamily="./Resources/password.ttf #Password"/>
+						<Button x:Name="UserTokenButton_Hidden" Style="{StaticResource ShowPasswordButton}" Click="UserTokenButton_Hidden_Click">
+							<Image Source="Images/eye.png"/>
+						</Button>
+						<TextBox x:Name="UserTokenText_Revealed" Visibility="Collapsed" Style="{StaticResource DarkTextBox}" Text="{Binding UserToken}" />
+						<Button x:Name="UserTokenButton_Revealed" Visibility="Collapsed" Style="{StaticResource ShowPasswordButton_On}" Click="UserTokenButton_Revealed_Click">
+							<Image Source="Images/eye.png"/>
+						</Button>
 					</StackPanel>
 					<StackPanel x:Name="CredentialsPanel_AppSecret" Orientation="Vertical" Visibility="{Binding CredentialsSourceIsAppSecret, Converter={StaticResource BoolToVisConverter}}">
 						<TextBlock Style="{StaticResource HeaderText}" Text="App Secret" />
-						<TextBox Style="{StaticResource DarkTextBox}" Text="{Binding AppSecret}"/>
+						<TextBox x:Name="AppSecretText_Hidden" Style="{StaticResource DarkTextBox}" Text="{Binding AppSecret}" FontFamily="./Resources/password.ttf #Password"/>
+						<Button x:Name="AppSecretButton_Hidden" Style="{StaticResource ShowPasswordButton}" Click="AppSecretButton_Hidden_Click">
+							<Image Source="Images/eye.png"/>
+						</Button>
+						<TextBox x:Name="AppSecretText_Revealed" Visibility="Collapsed" Style="{StaticResource DarkTextBox}" Text="{Binding AppSecret}" />
+						<Button x:Name="AppSecretButton_Revealed" Visibility="Collapsed" Style="{StaticResource ShowPasswordButton_On}" Click="AppSecretButton_Revealed_Click">
+							<Image Source="Images/eye.png"/>
+						</Button>
 					</StackPanel>
 				</StackPanel>
 
