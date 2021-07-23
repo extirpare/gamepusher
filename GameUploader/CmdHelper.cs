@@ -59,14 +59,15 @@ public static class CmdHelper
     public static Process RunCmd(string cmd, Action onExitAction = null)
     {
         Process p = new Process();
-        p.StartInfo.UseShellExecute = true;
+        p.StartInfo.UseShellExecute = false;
         p.StartInfo.RedirectStandardInput = false;
         p.StartInfo.RedirectStandardOutput = false;
         p.StartInfo.CreateNoWindow = false;
         p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
 
         p.StartInfo.FileName = "cmd.exe";
-        p.StartInfo.Arguments = "/K " + cmd;
+        //see https://stackoverflow.com/questions/355988/how-do-i-deal-with-quote-characters-when-using-cmd-exe
+        p.StartInfo.Arguments = $"/S /K \"{cmd}\"";
 
         if (onExitAction != null)
 		{
