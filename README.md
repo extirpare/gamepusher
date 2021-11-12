@@ -1,14 +1,14 @@
 # GamePusher
-GamePusher is a tool that helps you upload your builds to more game platforms, faster.
+GamePusher is a tool for Windows that helps you upload your builds to more game platforms, faster.
 
 ### What platforms does GamePusher upload to? ###
 Steam, Oculus, itch.io.
 
 ### What does GamePusher do? ###
-Every platform offers a command-line tool for uploading your game. Generally, these tools are faster and less buggy than any UI-based tools those platforms might also offer (if they offer one). However, command-line tools are scary and hard to use.
+Every gaming platform offers a command-line tool for uploading your game. These tools are faster and less buggy than UI-based tools those platforms offer (if they even have one). However, command-line tools are hard to use.
 
-GamePusher provides a nice interface for you to specify builds and release channels and the like; it saves all the data you enter for next time *(except passwords, if you say so in Settings)*; it provides communicative error messages to help you set everything up correctly; and it runs a platform's command-line upload tools for you with the correct values.
+GamePusher has a nice interface where you can specify your build, release channel, and anything else offered by platforms' command line tools.
+Also, it saves all the data you enter for next time *(except passwords, if you say so in Settings)*, and checks for errors.
+Then, when you press 'Upload', it opens a cmd prompt already running the correct command.
 
 *That's all it does.*
-
-**GamePusher is free and open-source software, licensed under the Apache License v2**
